@@ -1,7 +1,6 @@
 import { User as UserIcon, Calendar } from 'lucide-react';
 
 import { MarkdownRenderer } from '@/components/markdown-renderer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CURRENT_USER } from '@/lib/api';
 import { formatDate } from '@/lib/date';
 import type { User } from '@/types/generated/types.gen';
@@ -19,39 +18,36 @@ export function ProfileDetails({ profile }: ProfileDetailsProps) {
 
   if (!profile) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">User not found</h1>
-        </div>
+      <div className="text-center py-12">
+        <h1 className="ds-title mb-4">User not found</h1>
       </div>
     );
   }
 
   return (
     <>
-      <Card className="mb-8">
-        <CardHeader>
-          <div className="flex items-center space-x-4">
-            <div className="h-16 w-16 bg-primary rounded-full flex items-center justify-center">
-              <UserIcon className="h-8 w-8 text-primary-foreground" />
-            </div>
-            <div>
-              <CardTitle className="text-3xl">@{profile.username}</CardTitle>
-              <div className="flex items-center space-x-2 text-muted-foreground">
-                <Calendar className="h-4 w-4" />
-                <span>Joined {formatDate(profile.createdAt, 'en')}</span>
-              </div>
+      <article className="ds-surface mb-8 overflow-hidden ds-animate-in">
+        <div className="p-6 md:p-8 flex flex-col gap-6 sm:flex-row sm:items-center">
+          <div className="h-20 w-20 shrink-0 rounded-2xl bg-primary flex items-center justify-center shadow-sm">
+            <UserIcon className="h-9 w-9 text-primary-foreground" />
+          </div>
+          <div className="min-w-0">
+            <p className="ds-kicker">Profile</p>
+            <h1 className="ds-title truncate">@{profile.username}</h1>
+            <div className="flex items-center gap-2 text-muted-foreground mt-1">
+              <Calendar className="h-4 w-4" />
+              <span>Joined {formatDate(profile.createdAt, 'en')}</span>
             </div>
           </div>
-        </CardHeader>
+        </div>
         {profile.bio && (
-          <CardContent className="pt-0">
-            <div className="text-sm text-muted-foreground">
+          <div className="px-6 md:px-8 pb-6 md:pb-8 pt-0">
+            <div className="ds-prose text-sm border-t border-border/70 pt-5">
               <MarkdownRenderer content={profile.bio} />
             </div>
-          </CardContent>
+          </div>
         )}
-      </Card>
+      </article>
       {isMyProfile && (
         <div className="flex justify-end mb-6">
           <EditProfile profile={profile} />

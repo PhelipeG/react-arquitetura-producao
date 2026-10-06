@@ -2,7 +2,6 @@ import { Lightbulb } from 'lucide-react';
 
 import { EmptyState } from '@/components/empty-state';
 import { ErrorMessage } from '@/components/error-message';
-import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Idea } from '@/types/generated/types.gen';
 
@@ -23,15 +22,11 @@ export function IdeasList({
 }: IdeasListProps) {
   if (isLoading) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="space-y-4">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Skeleton key={i} className="h-32" />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="ds-surface p-6 space-y-4">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <Skeleton key={i} className="h-32 rounded-lg" />
+        ))}
+      </div>
     );
   }
 
@@ -50,16 +45,14 @@ export function IdeasList({
   }
 
   return (
-    <Card>
-      <CardContent className="p-0">
-        <div className="divide-y divide-border">
-          {ideas.map((idea) => (
-            <div key={idea.id} className="px-6">
-              <IdeaListItem idea={idea} />
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <div className="ds-surface overflow-hidden">
+      <div className="divide-y divide-border/80">
+        {ideas.map((idea) => (
+          <div key={idea.id} className="px-6">
+            <IdeaListItem idea={idea} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

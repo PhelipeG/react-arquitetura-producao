@@ -21,56 +21,58 @@ export function ReviewListItem({
   const isOwner = user && user.id === review.authorId;
 
   return (
-    <>
-      <div className="py-4 hover:bg-muted/30 transition-colors -mx-6 px-6 rounded-lg">
-        <div className="flex flex-col space-y-3">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                <div className="flex items-center space-x-1">
-                  <User className="h-3 w-3" />
-                  <Link
-                    to={`/profile/${review.author.username}`}
-                    className="hover:text-primary"
-                  >
-                    @{review.author.username}
-                  </Link>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Calendar className="h-3 w-3" />
-                  <span>{formatDate(review.createdAt, 'en')}</span>
-                </div>
-                {isOwner && <ReviewActions review={review} />}
+    <div className="ds-list-item py-5 -mx-6 px-6">
+      <div className="flex flex-col space-y-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+              <div className="flex items-center gap-1">
+                <User className="h-3 w-3" />
+                <Link
+                  to={`/profile/${review.author.username}`}
+                  className="hover:text-ds-accent transition-colors"
+                >
+                  @{review.author.username}
+                </Link>
               </div>
-            </div>
-
-            <div className="flex items-center space-x-1">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-4 w-4 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
-                />
-              ))}
+              <div className="flex items-center gap-1">
+                <Calendar className="h-3 w-3" />
+                <span>{formatDate(review.createdAt, 'en')}</span>
+              </div>
+              {isOwner && <ReviewActions review={review} />}
             </div>
           </div>
 
-          <div className="text-sm">
-            <p>{review.content}</p>
+          <div className="flex items-center gap-0.5 shrink-0">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                className={`h-4 w-4 ${
+                  i < review.rating
+                    ? 'fill-ds-accent text-ds-accent'
+                    : 'text-border'
+                }`}
+              />
+            ))}
           </div>
-
-          {showIdeaTitle && review.idea && (
-            <div className="text-xs text-muted-foreground">
-              Review for:{' '}
-              <Link
-                to={`/ideas/${review.idea.id}`}
-                className="font-medium hover:text-primary"
-              >
-                {review.idea.title}
-              </Link>
-            </div>
-          )}
         </div>
+
+        <p className="text-sm leading-relaxed text-foreground">
+          {review.content}
+        </p>
+
+        {showIdeaTitle && review.idea && (
+          <div className="text-xs text-muted-foreground">
+            Review for:{' '}
+            <Link
+              to={`/ideas/${review.idea.id}`}
+              className="font-medium hover:text-ds-accent transition-colors"
+            >
+              {review.idea.title}
+            </Link>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }

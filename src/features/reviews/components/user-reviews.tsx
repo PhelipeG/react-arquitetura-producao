@@ -12,7 +12,7 @@ export function UserReviews({ username }: UserReviewsProps) {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-6">
+      <h2 className="ds-title text-xl mb-6">
         Reviews by {username} ({reviews?.length || 0})
       </h2>
 

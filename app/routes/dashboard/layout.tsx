@@ -1,4 +1,4 @@
-import { LayoutDashboard, Home, MessageSquare } from 'lucide-react';
+import { LayoutDashboard, Lightbulb, MessageSquare } from 'lucide-react';
 import { NavLink, Outlet } from 'react-router';
 
 import { cn } from '@/lib/utils';
@@ -13,7 +13,7 @@ export default function DashboardLayout() {
     {
       href: '/dashboard/ideas',
       label: 'Minhas Ideias',
-      icon: Home,
+      icon: Lightbulb,
     },
     {
       href: '/dashboard/reviews',
@@ -23,35 +23,33 @@ export default function DashboardLayout() {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
-        <nav className="mb-6">
-          <div className="flex gap-2 border-b">
-            {dashboardNavItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <NavLink
-                  key={item.href}
-                  to={item.href}
-                  end={item.href === '/dashboard'}
-                  className={({ isActive }) =>
-                    cn(
-                      'flex items-center gap-2 px-4 py-2 border-b-2 transition-colors',
-                      isActive
-                        ? 'border-primary text-primary font-medium'
-                        : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted',
-                    )
-                  }
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
-                </NavLink>
-              );
-            })}
-          </div>
-        </nav>
-        <Outlet />
-      </div>
+    <div className="ds-page ds-page-narrow">
+      <nav className="mb-8" aria-label="Dashboard">
+        <div className="flex flex-wrap gap-1 border-b border-border/80">
+          {dashboardNavItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.href}
+                to={item.href}
+                end={item.href === '/dashboard'}
+                className={({ isActive }) =>
+                  cn(
+                    'flex items-center gap-2 px-4 py-2.5 border-b-2 -mb-px text-sm transition-colors',
+                    isActive
+                      ? 'border-ds-accent text-foreground font-semibold'
+                      : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border',
+                  )
+                }
+              >
+                <Icon className="h-4 w-4" />
+                {item.label}
+              </NavLink>
+            );
+          })}
+        </div>
+      </nav>
+      <Outlet />
     </div>
   );
 }

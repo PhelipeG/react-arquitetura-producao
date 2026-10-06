@@ -56,29 +56,25 @@ export default function IdeaDetailPage({
 
   const isAuthor = user?.id === idea?.authorId;
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
-        <Seo
-          title={`${idea.title} | AIdeas`}
-          description={idea.shortDescription}
-        />
-        <IdeaDetails idea={idea} currentUser={user} />
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">
-              Reviews ({reviews?.length || 0})
-            </h2>
-            {user && !isAuthor && <CreateReview ideaId={ideaId} />}
-          </div>
-
-          <ReviewsList
-            reviews={reviews}
-            isLoading={reviewsQuery?.isLoading}
-            showIdeaTitle={false}
-            emptyMessage="No reviews yet. Be the first to review this idea!"
-            error={reviewsQuery?.error}
-          />
+    <div className="ds-page ds-page-narrow">
+      <Seo
+        title={`${idea.title} | AIdeas`}
+        description={idea.shortDescription}
+      />
+      <IdeaDetails idea={idea} currentUser={user} />
+      <div className="space-y-6 ds-animate-in ds-animate-in-delay-1">
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="ds-title text-xl">Reviews ({reviews?.length || 0})</h2>
+          {user && !isAuthor && <CreateReview ideaId={ideaId} />}
         </div>
+
+        <ReviewsList
+          reviews={reviews}
+          isLoading={reviewsQuery?.isLoading}
+          showIdeaTitle={false}
+          emptyMessage="No reviews yet. Be the first to review this idea!"
+          error={reviewsQuery?.error}
+        />
       </div>
     </div>
   );
@@ -86,7 +82,7 @@ export default function IdeaDetailPage({
 
 export function ErrorBoundary({ error }: { error: Error }) {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
+    <div className="ds-page ds-page-narrow">
       <Seo
         title="Error Loading Idea | AIdeas"
         description="Error Loading Idea"

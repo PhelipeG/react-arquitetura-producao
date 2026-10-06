@@ -1,89 +1,93 @@
-import { Lightbulb, Share, MessageSquare } from 'lucide-react';
+import { Lightbulb, Share2, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router';
 
 import { Seo } from '@/components/seo';
 import { buttonVariants } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+
+const features = [
+  {
+    icon: Lightbulb,
+    title: 'Discover Ideas',
+    description:
+      'Explore innovative AI application ideas curated by the community.',
+  },
+  {
+    icon: Share2,
+    title: 'Share Yours',
+    description:
+      'Publish concepts, get visibility, and invite thoughtful critique.',
+  },
+  {
+    icon: MessageSquare,
+    title: 'Review & Discuss',
+    description:
+      'Give constructive feedback and help refine the next great idea.',
+  },
+] as const;
 
 export default function HomePage() {
   return (
-    <div className="container mx-auto px-4 py-16">
+    <div className="ds-page">
       <Seo
         title="AIdeas - Share and Discover AI Ideas"
         description="AIdeas - A community platform for sharing, reviewing, and discovering innovative AI application ideas"
       />
 
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
-          AIdeas - Share and Discover AI Ideas
+      <section className="ds-hero ds-hero-center">
+        <p className="ds-kicker ds-animate-in">Community for builders</p>
+        <h1 className="ds-display ds-animate-in ds-animate-in-delay-1">
+          AI<span className="text-ds-accent">ideas</span>
         </h1>
-        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-          AIdeas - A community platform for sharing, reviewing, and discovering
-          innovative AI application ideas
+        <p className="ds-subtitle ds-animate-in ds-animate-in-delay-2">
+          Share, review, and discover innovative AI application ideas — an
+          editorial space for builders who think in concepts.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="ds-cta-row ds-animate-in ds-animate-in-delay-3">
           <Link
             to="/ideas"
-            className={cn(buttonVariants({ size: 'lg' }), 'w-full sm:w-auto')}
+            className={cn(buttonVariants({ size: 'lg' }), 'min-w-36')}
           >
-            Get Started
+            Explore Ideas
           </Link>
           <Link
             to="/about"
             className={cn(
               buttonVariants({ variant: 'outline', size: 'lg' }),
-              'w-full sm:w-auto bg-transparent',
+              'min-w-36 bg-transparent',
             )}
           >
             Learn More
           </Link>
         </div>
-      </div>
+      </section>
 
-      <div className="grid md:grid-cols-3 gap-8">
-        <Card>
-          <CardHeader>
-            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-              <Lightbulb className="h-6 w-6 text-primary" />
-            </div>
-            <CardTitle>Discover Ideas</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Explore innovative AI application ideas from the community
-            </p>
-          </CardContent>
-        </Card>
+      <hr className="ds-divider mb-10" />
 
-        <Card>
-          <CardHeader>
-            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-              <Share className="h-6 w-6 text-primary" />
-            </div>
-            <CardTitle>Share Your Ideas</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Submit your own AI ideas and get feedback from others
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-              <MessageSquare className="h-6 w-6 text-primary" />
-            </div>
-            <CardTitle>Review & Discuss</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Provide constructive feedback and help refine great ideas
-            </p>
-          </CardContent>
-        </Card>
-      </div>
+      <section className="ds-section grid gap-6 md:grid-cols-3">
+        {features.map((feature, index) => {
+          const Icon = feature.icon;
+          return (
+            <article
+              key={feature.title}
+              className={cn(
+                'ds-surface ds-surface-interactive p-6',
+                index === 0 && 'ds-animate-in-delay-1',
+                index === 1 && 'ds-animate-in-delay-2',
+                index === 2 && 'ds-animate-in-delay-3',
+              )}
+            >
+              <div className="ds-feature-icon mb-4">
+                <Icon className="h-5 w-5" />
+              </div>
+              <h2 className="ds-title text-xl mb-2">{feature.title}</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {feature.description}
+              </p>
+            </article>
+          );
+        })}
+      </section>
     </div>
   );
 }

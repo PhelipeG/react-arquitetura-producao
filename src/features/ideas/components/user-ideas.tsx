@@ -12,7 +12,7 @@ export function UserIdeas({ username }: UserIdeasProps) {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-6">
+      <h2 className="ds-title text-xl mb-6">
         Ideas by {username} ({ideas?.length || 0})
       </h2>
       <IdeasList

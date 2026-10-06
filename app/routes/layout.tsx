@@ -4,9 +4,9 @@ import Navigation from '@/components/navigation';
 
 export default function Layout() {
   return (
-    <div>
+    <div className="ds-shell">
       <Navigation />
-      <main className="min-h-screen bg-background">
+      <main>
         <Outlet />
       </main>
     </div>

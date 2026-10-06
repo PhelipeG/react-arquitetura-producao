@@ -1,109 +1,98 @@
-import { Home, MessageSquare, Lightbulb, ArrowRight } from 'lucide-react';
+import { Lightbulb, MessageSquare, ArrowRight, Compass } from 'lucide-react';
 import { Link } from 'react-router';
 
+import { Seo } from '@/components/seo';
 import { buttonVariants } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-
-// import { Seo } from '@/components/seo';
 
 export default function DashboardPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* <Seo
+    <div className="space-y-8 ds-animate-in">
+      <Seo
         title="Dashboard | AIdeas"
         description="Manage your AI application ideas and reviews in one place"
-      /> */}
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
-          <p className="text-muted-foreground">Manage your ideas and reviews</p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex items-center space-x-2">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <Home className="h-6 w-6 text-primary" />
-                </div>
-                <CardTitle>My Ideas</CardTitle>
-              </div>
-              <CardDescription>
-                View and manage your submitted ideas
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col space-y-3">
-              <Link
-                to="/dashboard/ideas"
-                className={cn(
-                  buttonVariants({ variant: 'default' }),
-                  'w-full gap-2',
-                )}
-              >
-                View All Ideas
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <div className="flex items-center space-x-2">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <MessageSquare className="h-6 w-6 text-primary" />
-                </div>
-                <CardTitle>My Reviews</CardTitle>
-              </div>
-              <CardDescription>
-                See all reviews you&apos;ve written
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Link
-                to="/dashboard/reviews"
-                className={cn(
-                  buttonVariants({ variant: 'default' }),
-                  'w-full gap-2',
-                )}
-              >
-                View All Reviews
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center space-x-2">
-              <Lightbulb className="h-5 w-5 text-primary" />
-              <CardTitle>Explore Ideas</CardTitle>
-            </div>
-            <CardDescription>
-              Discover and review ideas from the community
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Link
-              to="/ideas"
-              className={cn(
-                buttonVariants({ variant: 'outline' }),
-                'w-full bg-transparent gap-2',
-              )}
-            >
-              Browse All Ideas
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </CardContent>
-        </Card>
+      />
+      <div>
+        <p className="ds-kicker">Workspace</p>
+        <h1 className="ds-title mb-2">Dashboard</h1>
+        <p className="ds-subtitle">Manage your ideas and reviews</p>
       </div>
+
+      <div className="grid gap-5 md:grid-cols-2">
+        <article className="ds-surface ds-surface-interactive p-6 flex flex-col gap-4">
+          <div className="flex items-center gap-3">
+            <div className="ds-feature-icon">
+              <Lightbulb className="h-5 w-5" />
+            </div>
+            <div>
+              <h2 className="font-heading text-lg font-semibold">My Ideas</h2>
+              <p className="text-sm text-muted-foreground">
+                View and manage your submitted ideas
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/dashboard/ideas"
+            className={cn(
+              buttonVariants({ variant: 'default' }),
+              'w-full gap-2',
+            )}
+          >
+            View All Ideas
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </article>
+
+        <article className="ds-surface ds-surface-interactive p-6 flex flex-col gap-4">
+          <div className="flex items-center gap-3">
+            <div className="ds-feature-icon">
+              <MessageSquare className="h-5 w-5" />
+            </div>
+            <div>
+              <h2 className="font-heading text-lg font-semibold">My Reviews</h2>
+              <p className="text-sm text-muted-foreground">
+                See all reviews you&apos;ve written
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/dashboard/reviews"
+            className={cn(
+              buttonVariants({ variant: 'default' }),
+              'w-full gap-2',
+            )}
+          >
+            View All Reviews
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </article>
+      </div>
+
+      <article className="ds-surface p-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <div className="ds-feature-icon">
+            <Compass className="h-5 w-5" />
+          </div>
+          <div>
+            <h2 className="font-heading text-lg font-semibold">
+              Explore Ideas
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Discover and review ideas from the community
+            </p>
+          </div>
+        </div>
+        <Link
+          to="/ideas"
+          className={cn(
+            buttonVariants({ variant: 'outline' }),
+            'bg-transparent gap-2 shrink-0',
+          )}
+        >
+          Browse All Ideas
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </article>
     </div>
   );
 }

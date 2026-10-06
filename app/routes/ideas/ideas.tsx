@@ -54,25 +54,30 @@ function Ideas() {
   const allIdeas = ideasQuery.data?.data || [];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="ds-page">
       <Seo
         title="Discover AI Ideas | AIdeas"
         description="Browse and explore innovative AI application ideas from the community"
       />
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">Discover AI Ideas</h1>
-        <p className="text-muted-foreground mb-6">
+      <div className="mb-8 ds-animate-in">
+        <p className="ds-kicker">Browse</p>
+        <h1 className="ds-title mb-3">Discover AI Ideas</h1>
+        <p className="ds-subtitle mb-6">
           Browse and explore innovative AI application ideas from the community
         </p>
-        <IdeaSearchAndFilters />
+        <div className="ds-surface p-4 md:p-5">
+          <IdeaSearchAndFilters />
+        </div>
       </div>
 
-      <IdeasList
-        ideas={allIdeas}
-        isLoading={ideasQuery.isLoading && allIdeas.length === 0}
-        emptyMessage={'No ideas available yet'}
-        error={ideasQuery.error}
-      />
+      <div className="ds-animate-in ds-animate-in-delay-1">
+        <IdeasList
+          ideas={allIdeas}
+          isLoading={ideasQuery.isLoading && allIdeas.length === 0}
+          emptyMessage={'No ideas available yet'}
+          error={ideasQuery.error}
+        />
+      </div>
     </div>
   );
 }
