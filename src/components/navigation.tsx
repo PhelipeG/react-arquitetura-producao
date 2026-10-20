@@ -1,17 +1,28 @@
 import { NavLink } from 'react-router';
 
-import { CURRENT_USER } from '@/lib/api';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import type { CurrentUser } from '@/types/generated/types.gen';
 
-const links = [
-  { to: '/', label: 'Home', end: true },
-  { to: '/ideas', label: 'Ideas' },
-  { to: '/about', label: 'About' },
-  { to: '/dashboard', label: 'Dashboard' },
-  { to: `/profile/${CURRENT_USER.username}`, label: 'Profile' },
-] as const;
+export default function Navigation({
+  user,
+  onLogout,
+}: {
+  user: CurrentUser;
+  onLogout: () => void;
+}) {
+  const links = [
+    { to: '/', label: 'Home', end: true },
+    { to: '/ideas', label: 'Ideas' },
+    { to: '/about', label: 'About' },
+    ...(user
+      ? [
+          { to: '/dashboard', label: 'Dashboard' },
+          { to: `/profile/${user.username}`, label: 'Profile' },
+        ]
+      : []),
+  ] as const;
 
-export default function Navigation() {
   return (
     <header className="ds-nav">
       <div className="ds-nav-inner">
@@ -35,6 +46,24 @@ export default function Navigation() {
               {link.label}
             </NavLink>
           ))}
+
+          {user ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onLogout}
+              className="ds-nav-link"
+            >
+              Logout
+            </Button>
+          ) : (
+            <NavLink
+              to="/auth/login"
+              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
+            >
+              Login
+            </NavLink>
+          )}
         </nav>
       </div>
     </header>

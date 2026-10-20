@@ -3,6 +3,10 @@ import { NavLink, Outlet } from 'react-router';
 
 import { cn } from '@/lib/utils';
 
+import { protectedMiddleware } from '~/middleware/protected';
+
+export const middleware = [protectedMiddleware];
+
 export default function DashboardLayout() {
   const dashboardNavItems = [
     {

@@ -35,23 +35,25 @@ export default function ProfilePage({
   const profile = profileQuery.data ?? loaderData?.profile;
 
   return (
-    <div className="ds-page ds-page-narrow">
+    <div className="container mx-auto px-4 py-8">
       <Seo
         title={`${profile.username} | AIdeas`}
         description="View profile, ideas, and reviews"
       />
-      <ProfileDetails profile={profile} />
-      <div className="mb-8">
-        <UserIdeas username={params.username} />
+      <div className="max-w-4xl mx-auto">
+        <ProfileDetails profile={profile} />
+        <div className="mb-8">
+          <UserIdeas username={params.username} />
+        </div>
+        <UserReviews username={params.username} />
       </div>
-      <UserReviews username={params.username} />
     </div>
   );
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
   return (
-    <div className="ds-page ds-page-narrow">
+    <div className="container mx-auto px-4 py-8 max-w-3xl">
       <Seo
         title="Error loading profile | AIdeas"
         description="Error loading profile"

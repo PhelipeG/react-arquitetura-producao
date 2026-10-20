@@ -1,7 +1,7 @@
 import { User as UserIcon, Calendar } from 'lucide-react';
 
 import { MarkdownRenderer } from '@/components/markdown-renderer';
-import { CURRENT_USER } from '@/lib/api';
+import { useUser } from '@/features/auth/hooks/use-user';
 import { formatDate } from '@/lib/date';
 import type { User } from '@/types/generated/types.gen';
 
@@ -12,9 +12,8 @@ export type ProfileDetailsProps = {
 };
 
 export function ProfileDetails({ profile }: ProfileDetailsProps) {
-  const user = CURRENT_USER;
-
-  const isMyProfile = user ? user.username === profile?.username : false;
+  const user = useUser();
+  const isMyProfile = Boolean(user && user.username === profile?.username);
 
   if (!profile) {
     return (

@@ -4,6 +4,7 @@ import { data as routerData, Link } from 'react-router';
 import { ErrorMessage } from '@/components/error-message';
 import { Seo } from '@/components/seo';
 import { buttonVariants } from '@/components/ui/button';
+import { useUser } from '@/features/auth/hooks/use-user';
 import {
   getIdeaById,
   useIdeaByIdQuery,
@@ -15,7 +16,6 @@ import {
 } from '@/features/reviews/api/get-reviews-by-idea';
 import { CreateReview } from '@/features/reviews/components/create-review';
 import { ReviewsList } from '@/features/reviews/components/reviews-list';
-import { CURRENT_USER } from '@/lib/api';
 import { cn } from '@/lib/utils';
 
 import type { Route } from './+types/idea';
@@ -36,7 +36,7 @@ export default function IdeaDetailPage({
   loaderData,
 }: Route.ComponentProps) {
   const ideaId = params.id as string;
-  const user = CURRENT_USER;
+  const user = useUser();
 
   const ideaQuery = useIdeaByIdQuery({
     id: ideaId,

@@ -42,7 +42,10 @@ const EnvSchema = z.object({
   DATABASE_AUTH_TOKEN: z.string().optional(),
   JWT_SECRET: z.string(),
   CLIENT_URLS: clientUrlsSchema,
-  BYPASS_AUTH: z.string().optional(),
+  BYPASS_AUTH: z
+    .enum(["true", "false", "1", "0"])
+    .optional()
+    .transform(value => value === "true" || value === "1"),
 }).superRefine((input, ctx) => {
   if (input.NODE_ENV === "production" && !input.DATABASE_AUTH_TOKEN) {
     ctx.addIssue({

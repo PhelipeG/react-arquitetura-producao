@@ -1,5 +1,5 @@
 import { env } from '@/config/env';
-import type { User } from '@/types/generated/types.gen';
+import type { RefreshTokenResponse } from '@/types/generated/types.gen';
 
 type RequestOptions<TBody = unknown> = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -7,6 +7,42 @@ type RequestOptions<TBody = unknown> = {
   body?: TBody;
   params?: Record<string, string | number | boolean | undefined | null>;
 };
+
+let refreshPromise: Promise<RefreshTokenResponse> | null = null;
+
+async function refreshToken(
+  cookieHeader?: string,
+): Promise<RefreshTokenResponse> {
+  if (refreshPromise) {
+    return refreshPromise;
+  }
+
+  refreshPromise = (async () => {
+    try {
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        ...(cookieHeader ? { Cookie: cookieHeader } : {}),
+      };
+
+      const refreshTokenResponse = await fetch(`${env.API_URL}/auth/refresh`, {
+        method: 'POST',
+        headers,
+        ...(cookieHeader ? {} : { credentials: 'include' }),
+      });
+
+      if (!refreshTokenResponse.ok) {
+        throw new Error('Token refresh failed');
+      }
+
+      return refreshTokenResponse.json();
+    } finally {
+      refreshPromise = null;
+    }
+  })();
+
+  return refreshPromise;
+}
 
 async function fetchApi<T, TBody = unknown>(
   url: string,
@@ -23,7 +59,7 @@ async function fetchApi<T, TBody = unknown>(
     });
   }
 
-  const makeRequest = async (): Promise<Response> => {
+  const makeRequest = async (accessToken?: string): Promise<Response> => {
     try {
       return await fetch(fullUrl, {
         method,
@@ -31,8 +67,12 @@ async function fetchApi<T, TBody = unknown>(
           Accept: 'application/json',
           ...(body ? { 'Content-Type': 'application/json' } : {}),
           ...headers,
+          ...(accessToken && typeof window === 'undefined'
+            ? { Authorization: `Bearer ${accessToken}` }
+            : {}),
         },
         body: body ? JSON.stringify(body) : undefined,
+        credentials: typeof window !== 'undefined' ? 'include' : undefined,
       });
     } catch (error) {
       if (error instanceof TypeError) {
@@ -47,6 +87,24 @@ async function fetchApi<T, TBody = unknown>(
   };
 
   let response = await makeRequest();
+
+  const isAuthenticationError =
+    !response.ok &&
+    response.status === 401 &&
+    !url.endsWith('/auth/login') &&
+    !url.endsWith('/auth/register');
+
+  if (isAuthenticationError) {
+    const cookieHeader = headers.Cookie;
+
+    try {
+      const { accessToken } = await refreshToken(cookieHeader);
+
+      response = await makeRequest(accessToken);
+    } catch (refreshError) {
+      console.warn('Token refresh failed:', refreshError);
+    }
+  }
 
   if (!response.ok) {
     let message = response.statusText;
@@ -95,13 +153,4 @@ export const api = {
   delete<T>(url: string, options?: RequestOptions): Promise<T> {
     return fetchApi<T>(url, { ...options, method: 'DELETE' });
   },
-};
-
-export const CURRENT_USER: User = {
-  id: '5bdba81b-e8fe-4ca7-a6b7-1250b6368634',
-  email: 'test1@mail.com',
-  username: 'test1',
-  bio: 'Software engineer passionate about building innovative solutions',
-  createdAt: '2025-11-13T15:39:22.000Z',
-  updatedAt: '2025-11-13T15:39:22.000Z',
 };

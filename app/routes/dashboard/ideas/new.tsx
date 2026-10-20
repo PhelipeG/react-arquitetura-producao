@@ -28,8 +28,6 @@ export default function NewIdeaPage() {
             Share your AI idea with the community
           </p>
         </div>
-        Chapter 5 136
-        {/* We are displaying the error state if the mutation fails */}
         {createIdeaMutation.error && (
           <ErrorMessage error={createIdeaMutation.error} />
         )}

@@ -1,7 +1,7 @@
 import { Star, User, Calendar } from 'lucide-react';
 import { Link } from 'react-router';
 
-import { CURRENT_USER } from '@/lib/api';
+import { useUser } from '@/features/auth/hooks/use-user';
 import { formatDate } from '@/lib/date';
 import type { Review } from '@/types/generated/types.gen';
 
@@ -16,9 +16,8 @@ export function ReviewListItem({
   review,
   showIdeaTitle = false,
 }: ReviewListItemProps) {
-  const user = CURRENT_USER;
-
-  const isOwner = user && user.id === review.authorId;
+  const user = useUser();
+  const isOwner = Boolean(user && user.id === review.authorId);
 
   return (
     <div className="ds-list-item py-5 -mx-6 px-6">
