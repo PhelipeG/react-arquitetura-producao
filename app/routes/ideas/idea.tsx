@@ -1,10 +1,11 @@
 import { Lightbulb } from 'lucide-react';
+import { Suspense, use } from 'react';
 import { data as routerData, Link } from 'react-router';
 
 import { ErrorMessage } from '@/components/error-message';
 import { Seo } from '@/components/seo';
 import { buttonVariants } from '@/components/ui/button';
-import { useUser } from '@/features/auth/hooks/use-user';
+import { useAuthorization } from '@/features/auth/hooks/use-authorization';
 import {
   getIdeaById,
   useIdeaByIdQuery,
@@ -16,18 +17,18 @@ import {
 } from '@/features/reviews/api/get-reviews-by-idea';
 import { CreateReview } from '@/features/reviews/components/create-review';
 import { ReviewsList } from '@/features/reviews/components/reviews-list';
+import { ReviewsSkeleton } from '@/features/reviews/components/reviews-skeleton';
 import { cn } from '@/lib/utils';
+import type { ReviewListResponse, Idea } from '@/types/generated/types.gen';
 
 import type { Route } from './+types/idea';
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const [idea, reviews] = await Promise.all([
-    getIdeaById(params.id),
-    getReviewsByIdea(params.id),
-  ]);
+  const idea = await getIdeaById(params.id);
+  const reviewsPromise = getReviewsByIdea(params.id);
   return routerData({
     idea,
-    reviews,
+    reviewsPromise,
   });
 }
 
@@ -36,7 +37,6 @@ export default function IdeaDetailPage({
   loaderData,
 }: Route.ComponentProps) {
   const ideaId = params.id as string;
-  const user = useUser();
 
   const ideaQuery = useIdeaByIdQuery({
     id: ideaId,
@@ -44,45 +44,65 @@ export default function IdeaDetailPage({
       ...(loaderData?.idea && { initialData: loaderData.idea }),
     },
   });
-  const idea = ideaQuery.data ?? loaderData.idea;
+  const idea = ideaQuery?.data ?? loaderData?.idea;
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <Seo
+        title={`${idea?.title || 'Idea'} | AIdeas`}
+        description={idea?.shortDescription || 'View idea details'}
+      />
+      <div className="max-w-4xl mx-auto">
+        <IdeaDetails idea={idea} />
+        <Suspense fallback={<ReviewsSkeleton />}>
+          <IdeaReviews idea={idea} reviewsPromise={loaderData.reviewsPromise} />
+        </Suspense>
+      </div>
+    </div>
+  );
+}
+
+function IdeaReviews({
+  idea,
+  reviewsPromise,
+}: {
+  idea: Idea;
+  reviewsPromise: Promise<ReviewListResponse>;
+}) {
+  const reviewsData = use(reviewsPromise); // hook do react para esperar a promise ser resolvida versao 19+
+  const { canCreateReview } = useAuthorization();
 
   const reviewsQuery = useReviewsByIdeaQuery({
-    id: ideaId,
+    id: idea.id,
     options: {
-      ...(loaderData?.reviews && { initialData: loaderData.reviews }),
+      ...(reviewsData && { initialData: reviewsData }),
     },
   });
   const reviews = reviewsQuery?.data?.data;
 
-  const isAuthor = user?.id === idea?.authorId;
   return (
-    <div className="ds-page ds-page-narrow">
-      <Seo
-        title={`${idea.title} | AIdeas`}
-        description={idea.shortDescription}
-      />
-      <IdeaDetails idea={idea} currentUser={user} />
-      <div className="space-y-6 ds-animate-in ds-animate-in-delay-1">
-        <div className="flex items-center justify-between gap-4">
-          <h2 className="ds-title text-xl">Reviews ({reviews?.length || 0})</h2>
-          {user && !isAuthor && <CreateReview ideaId={ideaId} />}
-        </div>
-
-        <ReviewsList
-          reviews={reviews}
-          isLoading={reviewsQuery?.isLoading}
-          showIdeaTitle={false}
-          emptyMessage="No reviews yet. Be the first to review this idea!"
-          error={reviewsQuery?.error}
-        />
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">
+          Reviews ({reviews?.length || 0})
+        </h2>
+        {canCreateReview(idea, reviews) && <CreateReview ideaId={idea.id} />}
       </div>
+
+      <ReviewsList
+        reviews={reviews}
+        isLoading={reviewsQuery?.isLoading}
+        showIdeaTitle={false}
+        emptyMessage="No reviews yet. Be the first to review this idea!"
+        error={reviewsQuery?.error}
+      />
     </div>
   );
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
   return (
-    <div className="ds-page ds-page-narrow">
+    <div className="container mx-auto px-4 py-8 max-w-3xl">
       <Seo
         title="Error Loading Idea | AIdeas"
         description="Error Loading Idea"

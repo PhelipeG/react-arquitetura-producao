@@ -2,14 +2,17 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { data as routerData } from 'react-router';
 
 import { Seo } from '@/components/seo';
+import { Button } from '@/components/ui/button';
 import {
-  getIdeasQueryOptions,
-  useIdeasQuery,
+  getIdeasInfiniteQueryOptions,
+  useIdeasInfiniteQuery,
 } from '@/features/ideas/api/get-ideas';
 import { getTagsQueryOptions } from '@/features/ideas/api/get-tags';
 import { IdeaSearchAndFilters } from '@/features/ideas/components/idea-search-and-filters';
 import { IdeasList } from '@/features/ideas/components/ideas-list';
+import { VirtualizedIdeasList } from '@/features/ideas/components/virtualized-ideas-list';
 import { useSearchAndFilters } from '@/features/ideas/hooks/use-search-and-filters';
+import { useIsClient } from '@/hooks/use-is-client';
 import { createQueryClient } from '@/lib/react-query';
 import type { GetAllIdeasData } from '@/types/generated/types.gen';
 
@@ -27,7 +30,9 @@ export async function loader({ request }: Route.LoaderArgs) {
   const queryClient = createQueryClient();
 
   await Promise.all([
-    queryClient.prefetchQuery(getIdeasQueryOptions(ideasParams)),
+    queryClient.prefetchInfiniteQuery(
+      getIdeasInfiniteQueryOptions(ideasParams),
+    ),
     queryClient.prefetchQuery(getTagsQueryOptions()),
   ]);
 
@@ -46,38 +51,50 @@ export default function IdeasPage({ loaderData }: Route.ComponentProps) {
 
 function Ideas() {
   const { params } = useSearchAndFilters();
+  const isClient = useIsClient();
 
-  const ideasQuery = useIdeasQuery({
+  const ideasInfiniteQuery = useIdeasInfiniteQuery({
     params: params as GetAllIdeasData['query'],
   });
 
-  const allIdeas = ideasQuery.data?.data || [];
+  const allIdeas =
+    ideasInfiniteQuery.data?.pages.flatMap((page) => page.data) || []; // pega todas as paginas e retorna um array com todos os dados das paginas
+  console.log('allIdeas', allIdeas);
+  const ListComponent = isClient ? VirtualizedIdeasList : IdeasList;
 
   return (
-    <div className="ds-page">
+    <div className="container mx-auto px-4 py-8">
       <Seo
         title="Discover AI Ideas | AIdeas"
         description="Browse and explore innovative AI application ideas from the community"
       />
-      <div className="mb-8 ds-animate-in">
-        <p className="ds-kicker">Browse</p>
-        <h1 className="ds-title mb-3">Discover AI Ideas</h1>
-        <p className="ds-subtitle mb-6">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-4">Discover AI Ideas</h1>
+        <p className="text-muted-foreground mb-6">
           Browse and explore innovative AI application ideas from the community
         </p>
-        <div className="ds-surface p-4 md:p-5">
-          <IdeaSearchAndFilters />
-        </div>
+        <IdeaSearchAndFilters />
       </div>
 
-      <div className="ds-animate-in ds-animate-in-delay-1">
-        <IdeasList
-          ideas={allIdeas}
-          isLoading={ideasQuery.isLoading && allIdeas.length === 0}
-          emptyMessage={'No ideas available yet'}
-          error={ideasQuery.error}
-        />
-      </div>
+      <ListComponent
+        ideas={allIdeas}
+        isLoading={ideasInfiniteQuery.isLoading && allIdeas.length === 0}
+        emptyMessage="No ideas available yet"
+        error={ideasInfiniteQuery.error}
+      />
+
+      {allIdeas.length > 0 && ideasInfiniteQuery.hasNextPage && (
+        <div className="flex justify-center mt-8">
+          <Button
+            onClick={() => ideasInfiniteQuery.fetchNextPage()}
+            disabled={ideasInfiniteQuery.isFetchingNextPage}
+          >
+            {ideasInfiniteQuery.isFetchingNextPage
+              ? 'Loading more ideas...'
+              : 'Load more ideas'}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

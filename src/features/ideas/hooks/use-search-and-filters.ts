@@ -1,6 +1,8 @@
 import { useQueryState, parseAsArrayOf, parseAsString } from 'nuqs';
 
-export function useSearchAndFilters() {
+import { useDebouncedValue } from '@/hooks/use-debounced-value';
+
+export function useSearchAndFilters(debounceMs: number = 500) {
   const [urlSearchTerm, setUrlSearchTerm] = useQueryState(
     'search',
     parseAsString.withDefault(''),
@@ -15,6 +17,8 @@ export function useSearchAndFilters() {
     'sortBy',
     parseAsString.withDefault(''),
   );
+
+  const debouncedSearchTerm = useDebouncedValue(urlSearchTerm, debounceMs);
 
   const toggleTag = (tag: string) => {
     setSelectedTags((currentTags) => {
@@ -36,16 +40,15 @@ export function useSearchAndFilters() {
 
   return {
     searchTerm: urlSearchTerm,
-    urlSearchTerm,
+    debouncedSearchTerm,
     selectedTags,
     sortBy,
     params: {
       ...(selectedTags.length > 0 && { tags: selectedTags.join(',') }),
-      ...(urlSearchTerm && { search: urlSearchTerm }),
+      ...(debouncedSearchTerm && { search: debouncedSearchTerm }),
       ...(sortBy && { sortBy }),
     },
     hasActiveFilters,
-
     setSearchTerm: setUrlSearchTerm,
     setSelectedTags,
     toggleTag,
