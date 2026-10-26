@@ -1,36 +1,29 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { reviewsQueryKeys } from '@/features/reviews/config/query-keys';
+import { useCreateReviewMutation } from '@/features/reviews/api/create-review';
+import { ReviewFormModal } from '@/features/reviews/components/review-form-modal';
 import { useNotificationActions } from '@/stores/notification';
 import type { CreateReviewData } from '@/types/generated/types.gen';
 
-import { useCreateReviewMutation } from '../api/create-review';
-
-import { ReviewFormModal } from './review-form-modal';
-
 export function CreateReview({ ideaId }: { ideaId: string }) {
-  const queryClient = useQueryClient();
-
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-
   const { showNotification } = useNotificationActions();
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   const createReviewMutation = useCreateReviewMutation({
     options: {
       onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: reviewsQueryKeys.byIdea(ideaId),
-        });
-        queryClient.invalidateQueries({
-          queryKey: reviewsQueryKeys.current(),
-        });
+        setIsReviewModalOpen(false);
         showNotification({
           type: 'success',
           title: 'Review created',
         });
-        setIsReviewModalOpen(false);
+      },
+      onError: () => {
+        showNotification({
+          type: 'error',
+          title: 'Failed to create review',
+        });
       },
     },
   });
