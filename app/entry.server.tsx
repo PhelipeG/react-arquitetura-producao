@@ -4,11 +4,13 @@ import { createReadableStreamFromReadable } from '@react-router/node';
 import { isbot } from 'isbot';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import { renderToPipeableStream } from 'react-dom/server';
+import { I18nextProvider } from 'react-i18next';
 import { ServerRouter } from 'react-router';
 import type { RouterContextProvider, EntryContext } from 'react-router';
 
 import { applySecurityHeaders } from '@/features/auth/lib/security-headers';
 
+import { getInstance } from './middleware/i18next';
 import { nonceContext } from './middleware/nonce';
 
 export const streamTimeout = 5_000;
@@ -43,7 +45,9 @@ export default function handleRequest(
     );
 
     const { pipe, abort } = renderToPipeableStream(
-      <ServerRouter context={routerContext} url={request.url} nonce={nonce} />,
+      <I18nextProvider i18n={getInstance(loadContext)}>
+        <ServerRouter context={routerContext} url={request.url} nonce={nonce} />
+      </I18nextProvider>,
       {
         nonce,
         [readyOption]() {

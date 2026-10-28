@@ -1,4 +1,5 @@
 import { LayoutDashboard, Lightbulb, MessageSquare } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { NavLink, Outlet } from 'react-router';
 
 import { cn } from '@/lib/utils';
@@ -8,27 +9,29 @@ import { protectedMiddleware } from '~/middleware/protected';
 export const middleware = [protectedMiddleware];
 
 export default function DashboardLayout() {
+  const { t } = useTranslation('dashboard');
+
   const dashboardNavItems = [
     {
       href: '/dashboard',
-      label: 'Painel',
+      label: t('navigation.dashboard'),
       icon: LayoutDashboard,
     },
     {
       href: '/dashboard/ideas',
-      label: 'Minhas Ideias',
+      label: t('navigation.myIdeas'),
       icon: Lightbulb,
     },
     {
       href: '/dashboard/reviews',
-      label: 'Minhas Revisões',
+      label: t('navigation.myReviews'),
       icon: MessageSquare,
     },
   ];
 
   return (
     <div className="ds-page ds-page-narrow">
-      <nav className="mb-8" aria-label="Dashboard">
+      <nav className="mb-8" aria-label={t('navigation.label')}>
         <div className="flex flex-wrap gap-1 border-b border-border/80">
           {dashboardNavItems.map((item) => {
             const Icon = item.icon;

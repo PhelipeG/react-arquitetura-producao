@@ -1,6 +1,7 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { NuqsAdapter } from 'nuqs/adapters/react-router/v7';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   data,
   isRouteErrorResponse,
@@ -17,15 +18,18 @@ import { createQueryClient } from '@/lib/react-query';
 
 import type { Route } from './+types/root';
 import './app.css';
+import { getLocale, i18nextMiddleware } from './middleware/i18next';
 import { nonceContext, nonceMiddleware } from './middleware/nonce';
 import { userContext, userMiddleware } from './middleware/user';
 
-export const middleware = [nonceMiddleware, userMiddleware];
+export const middleware = [nonceMiddleware, userMiddleware, i18nextMiddleware];
 
 export async function loader({ context }: Route.LoaderArgs) {
   const user = context.get(userContext);
   const nonce = context.get(nonceContext);
-  return data({ user, nonce });
+  const locale = getLocale(context);
+
+  return data({ user, nonce, locale });
 }
 
 export const links: Route.LinksFunction = () => [
@@ -42,10 +46,12 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { nonce } = useLoaderData<typeof loader>();
+  const { locale, nonce } = useLoaderData<typeof loader>();
+  const { i18n } = useTranslation();
+  const dir = typeof i18n.dir === 'function' ? i18n.dir(locale) : 'ltr';
 
   return (
-    <html lang="en">
+    <html lang={locale} dir={dir}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -74,15 +80,17 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = 'Oops!';
-  let details = 'An unexpected error occurred.';
+  const { t } = useTranslation(['common', 'notFound']);
+  let message = t('common:oops');
+  let details = t('common:unexpectedError');
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? '404' : 'Error';
+    message =
+      error.status === 404 ? t('common:pageNotFound') : t('common:error');
     details =
       error.status === 404
-        ? 'The requested page could not be found.'
+        ? t('common:pageNotFoundDescription')
         : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;

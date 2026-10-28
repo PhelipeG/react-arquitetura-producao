@@ -1,0 +1,70 @@
+export default {
+  actions: {
+    delete: 'Delete Idea',
+    edit: 'Edit Idea',
+  },
+  create: {
+    description: 'Share your AI idea with the community',
+    saving: 'Saving...',
+    submit: 'Create Idea',
+    title: 'Create New Idea',
+    update: 'Update Idea',
+  },
+  delete: {
+    description:
+      'Are you sure you want to delete "{{title}}"? This action cannot be undone.',
+    error: 'Failed to delete idea',
+    success: 'Idea deleted',
+    title: 'Delete Idea',
+  },
+  detail: {
+    back: 'Back to Ideas',
+    errorMetaTitle: 'Error Loading Idea | AIdeas',
+    errorTitle: 'Error Loading Idea',
+    fallbackDescription: 'View idea details',
+    fallbackTitle: 'Idea',
+  },
+  discover: {
+    description:
+      'Browse and explore innovative AI application ideas from the community',
+    metaTitle: 'Discover AI Ideas | AIdeas',
+    title: 'Discover AI Ideas',
+  },
+  filters: {
+    filterByTags: 'Filter by tags:',
+    newest: 'Newest',
+    oldest: 'Oldest',
+    rating: 'Highest Rating',
+    reviews: 'Most Reviews',
+    searchPlaceholder: 'Search ideas by title or description...',
+    sortBy: 'Sort by:',
+  },
+  form: {
+    description: 'Detailed Description (Markdown)',
+    descriptionPlaceholder: 'Enter detailed description in Markdown',
+    loadingTags: 'Loading tags...',
+    noTags: 'No tags available',
+    shortDescription: 'Short Description',
+    shortDescriptionPlaceholder: 'Enter a brief description',
+    tags: 'Tags',
+    title: 'Title',
+    titlePlaceholder: 'Enter idea title',
+  },
+  list: {
+    byUser: 'Ideas by {{username}} ({{count}})',
+    emptyByUser: "{{username}} hasn't shared any ideas yet.",
+    emptyDescription: 'Check back later or be the first to share an idea!',
+    emptyMine: "You haven't created any ideas yet.",
+    emptyTitle: 'No ideas available yet',
+    loadMore: 'Load more ideas',
+    loadingMore: 'Loading more ideas...',
+    reviews: '{{count}} reviews',
+  },
+  mine: {
+    description: 'Manage and track your submitted ideas',
+    metaDescription: 'Manage and track your submitted AI application ideas',
+    metaTitle: 'My Ideas | AIdeas',
+    new: 'New Idea',
+    title: 'My Ideas',
+  },
+};

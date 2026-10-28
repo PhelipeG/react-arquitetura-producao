@@ -7,6 +7,8 @@ import {
 } from '@react-router/dev/routes';
 
 export default [
+  route('api/locales/:lng/:ns', './routes/api/locales.ts'), // para carregar os arquivos de tradução
+  route('api/set-language', './routes/api/set-language.ts'), // para definir o idioma do usuario
   layout('./routes/layout.tsx', [
     index('routes/home.tsx'),
     route('about', './routes/about.tsx'),

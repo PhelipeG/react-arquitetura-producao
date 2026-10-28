@@ -1,4 +1,5 @@
 import { Lightbulb, MessageSquare, ArrowRight, Compass } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import { Seo } from '@/components/seo';
@@ -6,16 +7,15 @@ import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export default function DashboardPage() {
+  const { t } = useTranslation('dashboard');
+
   return (
     <div className="space-y-8 ds-animate-in">
-      <Seo
-        title="Dashboard | AIdeas"
-        description="Manage your AI application ideas and reviews in one place"
-      />
+      <Seo title={t('meta.title')} description={t('meta.description')} />
       <div>
-        <p className="ds-kicker">Workspace</p>
-        <h1 className="ds-title mb-2">Dashboard</h1>
-        <p className="ds-subtitle">Manage your ideas and reviews</p>
+        <p className="ds-kicker">{t('kicker')}</p>
+        <h1 className="ds-title mb-2">{t('title')}</h1>
+        <p className="ds-subtitle">{t('subtitle')}</p>
       </div>
 
       <div className="grid gap-5 md:grid-cols-2">
@@ -25,9 +25,11 @@ export default function DashboardPage() {
               <Lightbulb className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="font-heading text-lg font-semibold">My Ideas</h2>
+              <h2 className="font-heading text-lg font-semibold">
+                {t('myIdeas.title')}
+              </h2>
               <p className="text-sm text-muted-foreground">
-                View and manage your submitted ideas
+                {t('myIdeas.description')}
               </p>
             </div>
           </div>
@@ -38,7 +40,7 @@ export default function DashboardPage() {
               'w-full gap-2',
             )}
           >
-            View All Ideas
+            {t('myIdeas.viewAll')}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </article>
@@ -49,9 +51,11 @@ export default function DashboardPage() {
               <MessageSquare className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="font-heading text-lg font-semibold">My Reviews</h2>
+              <h2 className="font-heading text-lg font-semibold">
+                {t('myReviews.title')}
+              </h2>
               <p className="text-sm text-muted-foreground">
-                See all reviews you&apos;ve written
+                {t('myReviews.description')}
               </p>
             </div>
           </div>
@@ -62,7 +66,7 @@ export default function DashboardPage() {
               'w-full gap-2',
             )}
           >
-            View All Reviews
+            {t('myReviews.viewAll')}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </article>
@@ -75,10 +79,10 @@ export default function DashboardPage() {
           </div>
           <div>
             <h2 className="font-heading text-lg font-semibold">
-              Explore Ideas
+              {t('explore.title')}
             </h2>
             <p className="text-sm text-muted-foreground">
-              Discover and review ideas from the community
+              {t('explore.description')}
             </p>
           </div>
         </div>
@@ -89,7 +93,7 @@ export default function DashboardPage() {
             'bg-transparent gap-2 shrink-0',
           )}
         >
-          Browse All Ideas
+          {t('explore.browse')}
           <ArrowRight className="h-4 w-4" />
         </Link>
       </article>

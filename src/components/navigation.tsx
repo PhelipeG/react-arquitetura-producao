@@ -1,5 +1,7 @@
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router';
 
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { CurrentUser } from '@/types/generated/types.gen';
@@ -11,17 +13,19 @@ export default function Navigation({
   user: CurrentUser;
   onLogout: () => void;
 }) {
+  const { t } = useTranslation('navigation');
+
   const links = [
-    { to: '/', label: 'Home', end: true },
-    { to: '/ideas', label: 'Ideas' },
-    { to: '/about', label: 'About' },
+    { to: '/', label: t('home'), end: true },
+    { to: '/ideas', label: t('ideas') },
+    { to: '/about', label: t('about') },
     ...(user
       ? [
-          { to: '/dashboard', label: 'Dashboard' },
-          { to: `/profile/${user.username}`, label: 'Profile' },
+          { to: '/dashboard', label: t('dashboard') },
+          { to: `/profile/${user.username}`, label: t('profile') },
         ]
       : []),
-  ] as const;
+  ];
 
   return (
     <header className="ds-nav">
@@ -47,6 +51,8 @@ export default function Navigation({
             </NavLink>
           ))}
 
+          <LanguageSwitcher />
+
           {user ? (
             <Button
               variant="ghost"
@@ -54,14 +60,14 @@ export default function Navigation({
               onClick={onLogout}
               className="ds-nav-link"
             >
-              Logout
+              {t('logout')}
             </Button>
           ) : (
             <NavLink
               to="/auth/login"
               className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
             >
-              Login
+              {t('login')}
             </NavLink>
           )}
         </nav>
