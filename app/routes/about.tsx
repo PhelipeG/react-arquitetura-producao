@@ -1,77 +1,65 @@
 import { Lightbulb, Users, MessageSquare } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import { Seo } from '@/components/seo';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-const pillars = [
-  {
-    icon: Lightbulb,
-    title: 'Share Ideas',
-    description:
-      'Post AI concepts and projects to get visibility and feedback.',
-  },
-  {
-    icon: MessageSquare,
-    title: 'Get Reviews',
-    description:
-      'Receive ratings and constructive notes that sharpen your thinking.',
-  },
-  {
-    icon: Users,
-    title: 'Join Community',
-    description: 'Connect with builders who care about craft, not just hype.',
-  },
-] as const;
-
-const steps = [
-  {
-    title: 'Create an Account',
-    description: 'Sign up to share ideas and review projects from others.',
-  },
-  {
-    title: 'Submit Your Ideas',
-    description:
-      'Add descriptions, tags, and the details that make your concept clear.',
-  },
-  {
-    title: 'Engage with the Community',
-    description: 'Review, discuss, and collaborate with fellow innovators.',
-  },
-] as const;
-
 export default function AboutPage() {
+  const { t } = useTranslation('about');
+
+  const pillars = [
+    {
+      icon: Lightbulb,
+      title: t('features.shareIdeas.title'),
+      description: t('features.shareIdeas.description'),
+    },
+    {
+      icon: MessageSquare,
+      title: t('features.getReviews.title'),
+      description: t('features.getReviews.description'),
+    },
+    {
+      icon: Users,
+      title: t('features.joinCommunity.title'),
+      description: t('features.joinCommunity.description'),
+    },
+  ] as const;
+
+  const steps = [
+    {
+      title: t('howItWorks.steps.createAccount.title'),
+      description: t('howItWorks.steps.createAccount.description'),
+    },
+    {
+      title: t('howItWorks.steps.submit.title'),
+      description: t('howItWorks.steps.submit.description'),
+    },
+    {
+      title: t('howItWorks.steps.engage.title'),
+      description: t('howItWorks.steps.engage.description'),
+    },
+  ] as const;
+
   return (
     <div className="ds-page ds-page-narrow">
-      <Seo
-        title="About AIdeas"
-        description="Learn about AIdeas - a collaborative platform for sharing, reviewing, and refining AI-powered ideas with the community"
-      />
+      <Seo title={t('meta.title')} description={t('meta.description')} />
 
       <section className="ds-hero ds-hero-center">
-        <p className="ds-kicker">About the platform</p>
+        <p className="ds-kicker">{t('header.kicker')}</p>
         <h1 className="ds-display text-[clamp(2rem,5vw,3.25rem)]">
-          Ideas deserve better feedback
+          {t('header.title')}
         </h1>
-        <p className="ds-subtitle">
-          AIdeas is a collaborative space where innovators, developers, and AI
-          enthusiasts share concepts and refine them together.
-        </p>
+        <p className="ds-subtitle">{t('header.subtitle')}</p>
       </section>
 
       <section className="ds-section space-y-8">
         <article className="ds-surface p-6 md:p-8">
-          <h2 className="ds-title mb-4">What we do</h2>
+          <h2 className="ds-title mb-4">{t('whatWeDo.title')}</h2>
           <div className="ds-prose space-y-4">
-            <p>
-              Whether you&apos;re working on a machine learning project, an AI
-              application, or a creative concept, AIdeas helps you refine ideas
-              through peer reviews and community engagement.
-            </p>
-            <p>
-              We keep the focus on clarity, critique, and craft — not noise.
-            </p>
+            <p>{t('whatWeDo.paragraph1')}</p>
+            <p>{t('whatWeDo.paragraph2')}</p>
           </div>
         </article>
 
@@ -98,7 +86,7 @@ export default function AboutPage() {
         </div>
 
         <article className="ds-surface p-6 md:p-8">
-          <h2 className="ds-title mb-6">How it works</h2>
+          <h2 className="ds-title mb-6">{t('howItWorks.title')}</h2>
           <div className="space-y-5">
             {steps.map((step, index) => (
               <div key={step.title} className="flex gap-4">
@@ -123,10 +111,10 @@ export default function AboutPage() {
             'bg-transparent',
           )}
         >
-          Back to Home
+          {t('cta.backToHome')}
         </Link>
         <Link to="/ideas" className={buttonVariants({ size: 'lg' })}>
-          Explore Ideas
+          {t('cta.exploreIdeas')}
         </Link>
       </div>
     </div>

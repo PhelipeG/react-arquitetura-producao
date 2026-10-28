@@ -1,4 +1,5 @@
 import { Lightbulb } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@/components/empty-state';
 import { ErrorMessage } from '@/components/error-message';
@@ -20,6 +21,8 @@ export function IdeasList({
   emptyMessage,
   error,
 }: IdeasListProps) {
+  const { t } = useTranslation(['ideas', 'common']);
+
   if (isLoading) {
     return (
       <div className="ds-surface p-6 space-y-4">
@@ -31,15 +34,15 @@ export function IdeasList({
   }
 
   if (error) {
-    return <ErrorMessage error={error} title="Error" />;
+    return <ErrorMessage error={error} title={t('common:error')} />;
   }
 
   if (!ideas || ideas.length === 0) {
     return (
       <EmptyState
         icon={<Lightbulb />}
-        title={emptyMessage || 'No ideas available yet'}
-        description="Check back later or be the first to share an idea!"
+        title={emptyMessage || t('ideas:list.emptyTitle')}
+        description={t('ideas:list.emptyDescription')}
       />
     );
   }

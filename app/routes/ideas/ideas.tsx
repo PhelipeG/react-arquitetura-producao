@@ -1,4 +1,5 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { data as routerData } from 'react-router';
 
 import { Seo } from '@/components/seo';
@@ -50,6 +51,7 @@ export default function IdeasPage({ loaderData }: Route.ComponentProps) {
 }
 
 function Ideas() {
+  const { t } = useTranslation('ideas');
   const { params } = useSearchAndFilters();
   const isClient = useIsClient();
 
@@ -58,20 +60,19 @@ function Ideas() {
   });
 
   const allIdeas =
-    ideasInfiniteQuery.data?.pages.flatMap((page) => page.data) || []; // pega todas as paginas e retorna um array com todos os dados das paginas
-  console.log('allIdeas', allIdeas);
+    ideasInfiniteQuery.data?.pages.flatMap((page) => page.data) || [];
   const ListComponent = isClient ? VirtualizedIdeasList : IdeasList;
 
   return (
     <div className="container mx-auto px-4 py-8">
       <Seo
-        title="Discover AI Ideas | AIdeas"
-        description="Browse and explore innovative AI application ideas from the community"
+        title={t('discover.metaTitle')}
+        description={t('discover.description')}
       />
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">Discover AI Ideas</h1>
+        <h1 className="text-3xl font-bold mb-4">{t('discover.title')}</h1>
         <p className="text-muted-foreground mb-6">
-          Browse and explore innovative AI application ideas from the community
+          {t('discover.description')}
         </p>
         <IdeaSearchAndFilters />
       </div>
@@ -79,7 +80,7 @@ function Ideas() {
       <ListComponent
         ideas={allIdeas}
         isLoading={ideasInfiniteQuery.isLoading && allIdeas.length === 0}
-        emptyMessage="No ideas available yet"
+        emptyMessage={t('list.emptyTitle')}
         error={ideasInfiniteQuery.error}
       />
 
@@ -90,8 +91,8 @@ function Ideas() {
             disabled={ideasInfiniteQuery.isFetchingNextPage}
           >
             {ideasInfiniteQuery.isFetchingNextPage
-              ? 'Loading more ideas...'
-              : 'Load more ideas'}
+              ? t('list.loadingMore')
+              : t('list.loadMore')}
           </Button>
         </div>
       )}

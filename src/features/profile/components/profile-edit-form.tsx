@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { ErrorMessage } from '@/components/error-message';
 import { Button } from '@/components/ui/button';
@@ -31,6 +32,7 @@ export function ProfileEditForm({
   onSuccess,
   onCancel,
 }: ProfileEditFormProps) {
+  const { t } = useTranslation(['profile', 'common']);
   const queryClient = useQueryClient();
   const { showNotification } = useNotificationActions();
   const form = useForm<UpdateProfileData['body']>({
@@ -48,7 +50,7 @@ export function ProfileEditForm({
         });
         showNotification({
           type: 'success',
-          title: 'Profile updated',
+          title: t('profile:edit.success'),
         });
         onSuccess?.();
       },
@@ -69,12 +71,12 @@ export function ProfileEditForm({
           name="bio"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bio</FormLabel>
+              <FormLabel>{t('profile:form.bio')}</FormLabel>
               <FormControl>
                 <Textarea
                   {...field}
                   value={field.value || ''}
-                  placeholder="Tell us about yourself"
+                  placeholder={t('profile:form.bioPlaceholder')}
                   rows={5}
                 />
               </FormControl>
@@ -94,10 +96,10 @@ export function ProfileEditForm({
             onClick={onCancel}
             disabled={isPending}
           >
-            Cancel
+            {t('common:cancel')}
           </Button>
           <Button type="submit" disabled={isPending || !form.formState.isDirty}>
-            {isPending ? 'Saving...' : 'Save Changes'}
+            {isPending ? t('common:saving') : t('common:saveChanges')}
           </Button>
         </div>
       </form>

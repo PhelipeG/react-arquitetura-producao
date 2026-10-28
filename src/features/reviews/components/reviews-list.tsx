@@ -1,4 +1,5 @@
 import { MessageSquare } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@/components/empty-state';
 import { ErrorMessage } from '@/components/error-message';
@@ -22,6 +23,8 @@ export function ReviewsList({
   emptyMessage,
   error,
 }: ReviewsListProps) {
+  const { t } = useTranslation(['reviews', 'common']);
+
   if (isLoading) {
     return (
       <div className="ds-surface p-6 space-y-4">
@@ -40,17 +43,15 @@ export function ReviewsList({
   }
 
   if (error) {
-    return <ErrorMessage error={error} title="Error" />;
+    return <ErrorMessage error={error} title={t('common:error')} />;
   }
 
   if (!reviews || reviews.length === 0) {
     return (
       <EmptyState
         icon={<MessageSquare />}
-        title={
-          emptyMessage || 'No reviews yet. Be the first to review this idea!'
-        }
-        description="Share your thoughts and help others discover great ideas."
+        title={emptyMessage || t('reviews:emptyTitle')}
+        description={t('reviews:emptyDescription')}
       />
     );
   }

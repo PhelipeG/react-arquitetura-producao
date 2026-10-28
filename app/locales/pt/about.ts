@@ -6,39 +6,41 @@ export default {
   features: {
     getReviews: {
       description:
-        'Receba avaliações detalhadas, com notas e feedback construtivo, para melhorar suas ideias.',
+        'Receba notas e comentários construtivos que aprimoram seu raciocínio.',
       title: 'Receber avaliações',
     },
     joinCommunity: {
       description:
-        'Conecte-se com pessoas inovadoras e contribua com a comunidade de IA.',
+        'Conecte-se com quem se importa com o ofício, não só com o hype.',
       title: 'Entrar na comunidade',
     },
     shareIdeas: {
       description:
-        'Publique seus conceitos e projetos de IA para ganhar visibilidade e feedback da comunidade.',
+        'Publique conceitos e projetos de IA para ganhar visibilidade e feedback.',
       title: 'Compartilhar ideias',
     },
   },
   header: {
-    subtitle: 'Uma plataforma para compartilhar e avaliar ideias com IA',
-    title: 'Sobre o AI Ideas',
+    kicker: 'Sobre a plataforma',
+    subtitle:
+      'O AIdeas é um espaço colaborativo em que pessoas inovadoras, desenvolvedoras e entusiastas de IA compartilham conceitos e os refinam juntas.',
+    title: 'Ideias merecem um feedback melhor',
   },
   howItWorks: {
     steps: {
       createAccount: {
         description:
-          'Cadastre-se para começar a compartilhar suas ideias e avaliar os projetos de outras pessoas.',
+          'Cadastre-se para compartilhar ideias e avaliar projetos de outras pessoas.',
         title: 'Crie uma conta',
       },
       engage: {
         description:
-          'Avalie outras ideias, dê feedback e colabore com quem também está inovando.',
+          'Avalie, discuta e colabore com quem também está inovando.',
         title: 'Participe da comunidade',
       },
       submit: {
         description:
-          'Publique seus conceitos de IA com descrições, tags e os detalhes relevantes.',
+          'Adicione descrições, tags e os detalhes que deixam seu conceito claro.',
         title: 'Envie suas ideias',
       },
     },
@@ -51,9 +53,8 @@ export default {
   },
   whatWeDo: {
     paragraph1:
-      'O AIdeas é uma plataforma colaborativa em que pessoas inovadoras, desenvolvedoras e entusiastas de IA se reúnem para compartilhar ideias com IA e receber feedback construtivo da comunidade.',
-    paragraph2:
-      'Seja um projeto de machine learning, uma aplicação de IA ou apenas um conceito criativo, a plataforma ajuda a refinar suas ideias com avaliações de pares e participação da comunidade.',
+      'Seja um projeto de machine learning, uma aplicação de IA ou um conceito criativo, o AIdeas ajuda a refinar ideias com avaliações de pares e participação da comunidade.',
+    paragraph2: 'Mantemos o foco em clareza, crítica e ofício — não em ruído.',
     title: 'O que fazemos',
   },
 };

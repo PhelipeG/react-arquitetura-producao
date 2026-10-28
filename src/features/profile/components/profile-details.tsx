@@ -1,4 +1,5 @@
 import { User as UserIcon, Calendar } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { MarkdownRenderer } from '@/components/markdown-renderer';
 import { useUser } from '@/features/auth/hooks/use-user';
@@ -12,13 +13,14 @@ export type ProfileDetailsProps = {
 };
 
 export function ProfileDetails({ profile }: ProfileDetailsProps) {
+  const { t, i18n } = useTranslation('profile');
   const user = useUser();
   const isMyProfile = Boolean(user && user.username === profile?.username);
 
   if (!profile) {
     return (
       <div className="text-center py-12">
-        <h1 className="ds-title mb-4">User not found</h1>
+        <h1 className="ds-title mb-4">{t('notFound')}</h1>
       </div>
     );
   }
@@ -31,11 +33,15 @@ export function ProfileDetails({ profile }: ProfileDetailsProps) {
             <UserIcon className="h-9 w-9 text-primary-foreground" />
           </div>
           <div className="min-w-0">
-            <p className="ds-kicker">Profile</p>
+            <p className="ds-kicker">{t('kicker')}</p>
             <h1 className="ds-title truncate">@{profile.username}</h1>
             <div className="flex items-center gap-2 text-muted-foreground mt-1">
               <Calendar className="h-4 w-4" />
-              <span>Joined {formatDate(profile.createdAt, 'en')}</span>
+              <span>
+                {t('joined', {
+                  date: formatDate(profile.createdAt, i18n.language),
+                })}
+              </span>
             </div>
           </div>
         </div>

@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { ReviewsList } from '@/features/reviews/components/reviews-list';
 
 import { useReviewsByUserQuery } from '../api/get-reviews-by-user';
@@ -7,20 +9,21 @@ export type UserReviewsProps = {
 };
 
 export function UserReviews({ username }: UserReviewsProps) {
+  const { t } = useTranslation('reviews');
   const reviewsQuery = useReviewsByUserQuery({ username });
   const reviews = reviewsQuery.data?.data;
 
   return (
     <div>
       <h2 className="ds-title text-xl mb-6">
-        Reviews by {username} ({reviews?.length || 0})
+        {t('byUser', { username, count: reviews?.length || 0 })}
       </h2>
 
       <ReviewsList
         reviews={reviews}
         isLoading={reviewsQuery.isLoading}
         showIdeaTitle
-        emptyMessage={`${username} hasn't written any reviews yet.`}
+        emptyMessage={t('emptyByUser', { username })}
         error={reviewsQuery.error}
       />
     </div>

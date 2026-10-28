@@ -1,19 +1,23 @@
 export default {
+  exploreIdeas: 'Explore Ideas',
   features: {
     discover: {
-      description: 'Explore innovative AI application ideas from the community',
+      description:
+        'Explore innovative AI application ideas curated by the community.',
       title: 'Discover Ideas',
     },
     review: {
-      description: 'Provide constructive feedback and help refine great ideas',
+      description:
+        'Give constructive feedback and help refine the next great idea.',
       title: 'Review & Discuss',
     },
     share: {
-      description: 'Submit your own AI ideas and get feedback from others',
-      title: 'Share Your Ideas',
+      description:
+        'Publish concepts, get visibility, and invite thoughtful critique.',
+      title: 'Share Yours',
     },
   },
-  getStarted: 'Get Started',
+  kicker: 'Community for builders',
   learnMore: 'Learn More',
   meta: {
     description:
@@ -21,6 +25,5 @@ export default {
     title: 'AIdeas - Share and Discover AI Ideas',
   },
   subtitle:
-    'AIdeas - A community platform for sharing, reviewing, and discovering innovative AI application ideas',
-  title: 'AIdeas - Share and Discover AI Ideas',
+    'Share, review, and discover innovative AI application ideas — an editorial space for builders who think in concepts.',
 };

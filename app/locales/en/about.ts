@@ -6,43 +6,42 @@ export default {
   features: {
     getReviews: {
       description:
-        'Receive detailed reviews with ratings and constructive feedback to improve your ideas.',
+        'Receive ratings and constructive notes that sharpen your thinking.',
       title: 'Get Reviews',
     },
     joinCommunity: {
-      description:
-        'Connect with like-minded innovators and contribute to the AI community.',
+      description: 'Connect with builders who care about craft, not just hype.',
       title: 'Join Community',
     },
     shareIdeas: {
       description:
-        'Post your AI concepts and projects to get visibility and feedback from the community.',
+        'Post AI concepts and projects to get visibility and feedback.',
       title: 'Share Ideas',
     },
   },
   header: {
-    subtitle: 'A platform for sharing and reviewing AI-powered ideas',
-    title: 'About AI Ideas',
+    kicker: 'About the platform',
+    subtitle:
+      'AIdeas is a collaborative space where innovators, developers, and AI enthusiasts share concepts and refine them together.',
+    title: 'Ideas deserve better feedback',
   },
   howItWorks: {
     steps: {
       createAccount: {
-        description:
-          "Sign up to start sharing your ideas and reviewing others' projects.",
+        description: 'Sign up to share ideas and review projects from others.',
         title: 'Create an Account',
       },
       engage: {
-        description:
-          'Review other ideas, provide feedback, and collaborate with fellow innovators.',
+        description: 'Review, discuss, and collaborate with fellow innovators.',
         title: 'Engage with the Community',
       },
       submit: {
         description:
-          'Post your AI concepts with descriptions, tags, and relevant details.',
+          'Add descriptions, tags, and the details that make your concept clear.',
         title: 'Submit Your Ideas',
       },
     },
-    title: 'How It Works',
+    title: 'How it works',
   },
   meta: {
     description:
@@ -51,9 +50,9 @@ export default {
   },
   whatWeDo: {
     paragraph1:
-      'AIdeas is a collaborative platform where innovators, developers, and AI enthusiasts come together to share their AI-powered ideas and receive constructive feedback from the community.',
+      "Whether you're working on a machine learning project, an AI application, or a creative concept, AIdeas helps you refine ideas through peer reviews and community engagement.",
     paragraph2:
-      "Whether you're working on a machine learning project, an AI application, or just have a creative concept, our platform helps you refine your ideas through peer reviews and community engagement.",
-    title: 'What We Do',
+      'We keep the focus on clarity, critique, and craft — not noise.',
+    title: 'What we do',
   },
 };

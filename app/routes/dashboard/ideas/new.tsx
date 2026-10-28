@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 import { ErrorMessage } from '@/components/error-message';
@@ -7,9 +8,9 @@ import { IdeaForm } from '@/features/ideas/components/idea-form';
 import { ideasQueryKeys } from '@/features/ideas/config/query-keys';
 
 export default function NewIdeaPage() {
+  const { t } = useTranslation('ideas');
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  // We are using the mutation hook to get the mutation object:
   const createIdeaMutation = useCreateIdeaMutation({
     options: {
       onSuccess: () => {
@@ -19,23 +20,20 @@ export default function NewIdeaPage() {
       },
     },
   });
+
   return (
     <div>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Create New Idea</h1>
-          <p className="text-muted-foreground">
-            Share your AI idea with the community
-          </p>
+          <h1 className="text-3xl font-bold mb-2">{t('create.title')}</h1>
+          <p className="text-muted-foreground">{t('create.description')}</p>
         </div>
         {createIdeaMutation.error && (
           <ErrorMessage error={createIdeaMutation.error} />
         )}
         <IdeaForm
-          // We are using mutate method to trigger the mutation
           onSubmit={createIdeaMutation.mutate}
           onCancel={() => navigate('/dashboard/ideas')}
-          // We are showing the loading state if the mutation is pending
           isSubmitting={createIdeaMutation.isPending}
         />
       </div>

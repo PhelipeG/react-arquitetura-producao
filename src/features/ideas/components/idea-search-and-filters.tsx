@@ -1,4 +1,5 @@
 import { Search, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -14,6 +15,7 @@ import { useTagsQuery } from '@/features/ideas/api/get-tags';
 import { useSearchAndFilters } from '@/features/ideas/hooks/use-search-and-filters';
 
 export function IdeaSearchAndFilters() {
+  const { t } = useTranslation(['ideas', 'common']);
   const {
     searchTerm,
     selectedTags,
@@ -33,7 +35,7 @@ export function IdeaSearchAndFilters() {
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Search ideas by title or description..."
+          placeholder={t('ideas:filters.searchPlaceholder')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="pl-10"
@@ -41,7 +43,9 @@ export function IdeaSearchAndFilters() {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-sm font-medium">Filter by tags:</span>
+        <span className="text-sm font-medium">
+          {t('ideas:filters.filterByTags')}
+        </span>
         {availableTags.map((tag) => (
           <Badge
             key={tag}
@@ -57,17 +61,25 @@ export function IdeaSearchAndFilters() {
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium whitespace-nowrap">
-            Sort by:
+            {t('ideas:filters.sortBy')}
           </span>
           <Select value={sortBy} onValueChange={(value) => setSortBy(value)}>
             <SelectTrigger className="w-45">
-              <SelectValue placeholder="Newest" />
+              <SelectValue placeholder={t('ideas:filters.newest')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="newest">Newest</SelectItem>
-              <SelectItem value="oldest">Oldest</SelectItem>
-              <SelectItem value="rating">Highest Rating</SelectItem>
-              <SelectItem value="reviews">Most Reviews</SelectItem>
+              <SelectItem value="newest">
+                {t('ideas:filters.newest')}
+              </SelectItem>
+              <SelectItem value="oldest">
+                {t('ideas:filters.oldest')}
+              </SelectItem>
+              <SelectItem value="rating">
+                {t('ideas:filters.rating')}
+              </SelectItem>
+              <SelectItem value="reviews">
+                {t('ideas:filters.reviews')}
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -80,7 +92,7 @@ export function IdeaSearchAndFilters() {
             className="h-8 px-2"
           >
             <X className="h-3 w-3 mr-1" />
-            Clear Filters
+            {t('common:clearFilters')}
           </Button>
         )}
       </div>

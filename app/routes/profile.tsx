@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { data as routerData, Link } from 'react-router';
 
 import { ErrorMessage } from '@/components/error-message';
@@ -25,6 +26,7 @@ export default function ProfilePage({
   params,
   loaderData,
 }: Route.ComponentProps) {
+  const { t } = useTranslation('profile');
   const profileQuery = useProfileByUsernameQuery({
     username: params.username,
     options: {
@@ -38,7 +40,7 @@ export default function ProfilePage({
     <div className="container mx-auto px-4 py-8">
       <Seo
         title={`${profile.username} | AIdeas`}
-        description="View profile, ideas, and reviews"
+        description={t('metaDescription')}
       />
       <div className="max-w-4xl mx-auto">
         <ProfileDetails profile={profile} />
@@ -52,20 +54,22 @@ export default function ProfilePage({
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
+  const { t } = useTranslation(['profile', 'common']);
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
       <Seo
-        title="Error loading profile | AIdeas"
-        description="Error loading profile"
+        title={t('profile:pageError.titleWithBrand')}
+        description={t('profile:pageError.description')}
       />
       <div className="space-y-6">
-        <ErrorMessage error={error} title="Error loading profile" />
+        <ErrorMessage error={error} title={t('profile:pageError.title')} />
         <div className="flex justify-center">
           <Link
             to="/"
             className={buttonVariants({ variant: 'outline', size: 'lg' })}
           >
-            Go Home
+            {t('common:goHome')}
           </Link>
         </div>
       </div>

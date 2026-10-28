@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -17,19 +18,18 @@ export type EditProfileProps = {
 };
 
 export function EditProfile({ profile }: EditProfileProps) {
+  const { t } = useTranslation('profile');
   const [showEditDialog, setShowEditDialog] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setShowEditDialog(true)}>Edit Profile</Button>
+      <Button onClick={() => setShowEditDialog(true)}>{t('edit.title')}</Button>
 
       <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
         <DialogContent className="sm:max-w-25">
           <DialogHeader>
-            <DialogTitle>Edit Profile</DialogTitle>
-            <DialogDescription>
-              Update your profile information
-            </DialogDescription>
+            <DialogTitle>{t('edit.title')}</DialogTitle>
+            <DialogDescription>{t('edit.description')}</DialogDescription>
           </DialogHeader>
           <ProfileEditForm
             profile={profile}

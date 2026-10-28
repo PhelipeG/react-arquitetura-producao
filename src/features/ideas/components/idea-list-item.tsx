@@ -1,4 +1,5 @@
 import { MessageSquare, User, Calendar } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import { RatingDisplay } from '@/components/rating-display';
@@ -11,6 +12,8 @@ export type IdeaListItemProps = {
 };
 
 export function IdeaListItem({ idea }: IdeaListItemProps) {
+  const { t, i18n } = useTranslation('ideas');
+
   return (
     <div className="ds-list-item py-6 -mx-6 px-6">
       <div className="flex flex-col space-y-3">
@@ -36,11 +39,11 @@ export function IdeaListItem({ idea }: IdeaListItemProps) {
               </div>
               <div className="flex items-center gap-1">
                 <Calendar className="h-3 w-3" />
-                <span>{formatDate(idea.createdAt, 'en')}</span>
+                <span>{formatDate(idea.createdAt, i18n.language)}</span>
               </div>
               <div className="flex items-center gap-1">
                 <MessageSquare className="h-3 w-3" />
-                <span>{idea.reviewsCount} reviews</span>
+                <span>{t('list.reviews', { count: idea.reviewsCount })}</span>
               </div>
               {idea.avgRating !== null && idea.avgRating > 0 && (
                 <RatingDisplay

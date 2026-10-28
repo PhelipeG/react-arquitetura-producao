@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -31,6 +32,7 @@ export function IdeaForm({
   onCancel,
   isSubmitting,
 }: IdeaFormProps) {
+  const { t } = useTranslation(['ideas', 'common']);
   const tagsQuery = useTagsQuery();
   const availableTags = tagsQuery.data?.data || [];
 
@@ -52,10 +54,10 @@ export function IdeaForm({
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>{t('ideas:form.title')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter idea title"
+                  placeholder={t('ideas:form.titlePlaceholder')}
                   disabled={isSubmitting}
                   {...field}
                 />
@@ -70,10 +72,10 @@ export function IdeaForm({
           name="shortDescription"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Short Description</FormLabel>
+              <FormLabel>{t('ideas:form.shortDescription')}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Enter a brief description"
+                  placeholder={t('ideas:form.shortDescriptionPlaceholder')}
                   rows={2}
                   disabled={isSubmitting}
                   {...field}
@@ -89,10 +91,10 @@ export function IdeaForm({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Detailed Description (Markdown)</FormLabel>
+              <FormLabel>{t('ideas:form.description')}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Enter detailed description in Markdown"
+                  placeholder={t('ideas:form.descriptionPlaceholder')}
                   rows={8}
                   disabled={isSubmitting}
                   className="min-h-50"
@@ -109,16 +111,16 @@ export function IdeaForm({
           name="tags"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tags</FormLabel>
+              <FormLabel>{t('ideas:form.tags')}</FormLabel>
               <FormControl>
                 <div className="flex flex-wrap gap-2">
                   {tagsQuery.isLoading ? (
                     <p className="text-sm text-muted-foreground">
-                      Loading tags...
+                      {t('ideas:form.loadingTags')}
                     </p>
                   ) : availableTags.length === 0 ? (
                     <p className="text-sm text-muted-foreground">
-                      No tags available
+                      {t('ideas:form.noTags')}
                     </p>
                   ) : (
                     availableTags.map((tag: string) => {
@@ -132,7 +134,7 @@ export function IdeaForm({
                             if (isSubmitting) return;
                             const currentTags = field.value || [];
                             const newTags = isSelected
-                              ? currentTags.filter((t) => t !== tag)
+                              ? currentTags.filter((item) => item !== tag)
                               : [...currentTags, tag];
                             field.onChange(newTags);
                           }}
@@ -152,10 +154,10 @@ export function IdeaForm({
         <div className="flex space-x-2">
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting
-              ? 'Saving...'
+              ? t('ideas:create.saving')
               : initialData
-                ? 'Update Idea'
-                : 'Create Idea'}
+                ? t('ideas:create.update')
+                : t('ideas:create.submit')}
           </Button>
           {onCancel && (
             <Button
@@ -164,7 +166,7 @@ export function IdeaForm({
               onClick={onCancel}
               disabled={isSubmitting}
             >
-              Cancel
+              {t('common:cancel')}
             </Button>
           )}
         </div>

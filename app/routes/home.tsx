@@ -1,54 +1,50 @@
 import { Lightbulb, Share2, MessageSquare } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import { Seo } from '@/components/seo';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-const features = [
-  {
-    icon: Lightbulb,
-    title: 'Discover Ideas',
-    description:
-      'Explore innovative AI application ideas curated by the community.',
-  },
-  {
-    icon: Share2,
-    title: 'Share Yours',
-    description:
-      'Publish concepts, get visibility, and invite thoughtful critique.',
-  },
-  {
-    icon: MessageSquare,
-    title: 'Review & Discuss',
-    description:
-      'Give constructive feedback and help refine the next great idea.',
-  },
-] as const;
-
 export default function HomePage() {
+  const { t } = useTranslation('home');
+
+  const features = [
+    {
+      icon: Lightbulb,
+      title: t('features.discover.title'),
+      description: t('features.discover.description'),
+    },
+    {
+      icon: Share2,
+      title: t('features.share.title'),
+      description: t('features.share.description'),
+    },
+    {
+      icon: MessageSquare,
+      title: t('features.review.title'),
+      description: t('features.review.description'),
+    },
+  ] as const;
+
   return (
     <div className="ds-page">
-      <Seo
-        title="AIdeas - Share and Discover AI Ideas"
-        description="AIdeas - A community platform for sharing, reviewing, and discovering innovative AI application ideas"
-      />
+      <Seo title={t('meta.title')} description={t('meta.description')} />
 
       <section className="ds-hero ds-hero-center">
-        <p className="ds-kicker ds-animate-in">Community for builders</p>
+        <p className="ds-kicker ds-animate-in">{t('kicker')}</p>
         <h1 className="ds-display ds-animate-in ds-animate-in-delay-1">
           AI<span className="text-ds-accent">ideas</span>
         </h1>
         <p className="ds-subtitle ds-animate-in ds-animate-in-delay-2">
-          Share, review, and discover innovative AI application ideas — an
-          editorial space for builders who think in concepts.
+          {t('subtitle')}
         </p>
         <div className="ds-cta-row ds-animate-in ds-animate-in-delay-3">
           <Link
             to="/ideas"
             className={cn(buttonVariants({ size: 'lg' }), 'min-w-36')}
           >
-            Explore Ideas
+            {t('exploreIdeas')}
           </Link>
           <Link
             to="/about"
@@ -57,7 +53,7 @@ export default function HomePage() {
               'min-w-36 bg-transparent',
             )}
           >
-            Learn More
+            {t('learnMore')}
           </Link>
         </div>
       </section>

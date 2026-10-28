@@ -1,5 +1,6 @@
 import { useWindowVirtualizer } from '@tanstack/react-virtual';
 import { Lightbulb } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { EmptyState } from '@/components/empty-state';
 import { ErrorMessage } from '@/components/error-message';
@@ -22,10 +23,11 @@ export function VirtualizedIdeasList({
   emptyMessage,
   error,
 }: VirtualizedIdeasListProps) {
+  const { t } = useTranslation(['ideas', 'common']);
   const virtualizer = useWindowVirtualizer({
-    count: ideas?.length || 0, // quantidade de ideas a serem exibidas
-    estimateSize: () => 150, // tamanho estimado de cada idea
-    overscan: 5, // quantidade de ideas a serem carregadas antes e depois da visao
+    count: ideas?.length || 0,
+    estimateSize: () => 150,
+    overscan: 5,
   });
 
   if (isLoading) {
@@ -43,15 +45,15 @@ export function VirtualizedIdeasList({
   }
 
   if (error) {
-    return <ErrorMessage error={error} title="Error" />;
+    return <ErrorMessage error={error} title={t('common:error')} />;
   }
 
   if (!ideas || ideas.length === 0) {
     return (
       <EmptyState
         icon={<Lightbulb />}
-        title={emptyMessage || 'No ideas available yet'}
-        description="Check back later or be the first to share an idea!"
+        title={emptyMessage || t('ideas:list.emptyTitle')}
+        description={t('ideas:list.emptyDescription')}
       />
     );
   }
