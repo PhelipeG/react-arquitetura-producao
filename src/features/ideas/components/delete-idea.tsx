@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 import { ErrorMessage } from '@/components/error-message';
@@ -31,6 +32,7 @@ export function DeleteIdea({
   onClose,
   onSuccess,
 }: DeleteIdeaProps) {
+  const { t } = useTranslation(['ideas', 'common']);
   const queryClient = useQueryClient();
   const { showNotification } = useNotificationActions();
   const navigate = useNavigate();
@@ -43,13 +45,19 @@ export function DeleteIdea({
         queryClient.invalidateQueries({
           queryKey: ideasQueryKeys.detail(idea.id),
         });
-        showNotification({ type: 'success', title: 'Idea deleted' });
+        showNotification({
+          type: 'success',
+          title: t('ideas:delete.success'),
+        });
         onClose();
         onSuccess?.();
         navigate('/dashboard/ideas');
       },
       onError: () => {
-        showNotification({ type: 'error', title: 'Failed to delete idea' });
+        showNotification({
+          type: 'error',
+          title: t('ideas:delete.error'),
+        });
       },
     },
   });
@@ -62,23 +70,24 @@ export function DeleteIdea({
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Idea</AlertDialogTitle>
+          <AlertDialogTitle>{t('ideas:delete.title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete &quot;{idea?.title}&quot;? This
-            action cannot be undone.
+            {t('ideas:delete.description', { title: idea?.title })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         {deleteIdeaMutation.error && (
           <ErrorMessage error={deleteIdeaMutation.error} />
         )}
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t('common:cancel')}</AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"
             onClick={handleDelete}
             disabled={deleteIdeaMutation.isPending}
           >
-            {deleteIdeaMutation.isPending ? 'Deleting...' : 'Delete'}
+            {deleteIdeaMutation.isPending
+              ? t('common:deleting')
+              : t('common:delete')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

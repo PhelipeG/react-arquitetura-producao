@@ -77,6 +77,15 @@ function Ideas() {
         <IdeaSearchAndFilters />
       </div>
 
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+        role="status"
+      >
+        {t('list.resultsFound', { count: allIdeas.length })}
+      </div>
+
       <ListComponent
         ideas={allIdeas}
         isLoading={ideasInfiniteQuery.isLoading && allIdeas.length === 0}

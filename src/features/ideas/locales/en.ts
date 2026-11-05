@@ -2,6 +2,7 @@ export default {
   actions: {
     delete: 'Delete Idea',
     edit: 'Edit Idea',
+    menu: 'Idea actions',
   },
   create: {
     description: 'Share your AI idea with the community',
@@ -38,6 +39,7 @@ export default {
     reviews: 'Most Reviews',
     searchPlaceholder: 'Search ideas by title or description...',
     sortBy: 'Sort by:',
+    tagStatus: '{{tag}}, {{status}}',
   },
   form: {
     description: 'Detailed Description (Markdown)',
@@ -58,6 +60,8 @@ export default {
     emptyTitle: 'No ideas available yet',
     loadMore: 'Load more ideas',
     loadingMore: 'Loading more ideas...',
+    resultsFound_one: '{{count}} idea found',
+    resultsFound_other: '{{count}} ideas found',
     reviews: '{{count}} reviews',
   },
   mine: {

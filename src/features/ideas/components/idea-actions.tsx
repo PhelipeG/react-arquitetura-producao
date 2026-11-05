@@ -1,5 +1,6 @@
 import { MoreHorizontal, Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
@@ -19,6 +20,7 @@ export type IdeaActionsProps = {
 
 export function IdeaActions({ idea }: IdeaActionsProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation(['ideas']);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleEditClick = () => {
@@ -30,22 +32,27 @@ export function IdeaActions({ idea }: IdeaActionsProps) {
       <DropdownMenu>
         <DropdownMenuTrigger
           render={
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0"
+              aria-label={t('actions.menu')}
+            >
+              <MoreHorizontal className="h-4 w-4" aria-hidden="true" />
             </Button>
           }
         />
         <DropdownMenuContent align="end" className="w-36">
           <DropdownMenuItem onClick={handleEditClick}>
             <Edit className="h-4 w-4 mr-2" />
-            Edit Idea
+            {t('actions.edit')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setShowDeleteDialog(true)}
             variant="destructive"
           >
             <Trash2 className="h-4 w-4 mr-2" />
-            Delete Idea
+            {t('actions.delete')}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

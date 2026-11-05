@@ -6,6 +6,7 @@ export default {
   actions: {
     delete: 'Excluir ideia',
     edit: 'Editar ideia',
+    menu: 'Ações da ideia',
   },
   create: {
     description: 'Compartilhe sua ideia de IA com a comunidade',
@@ -42,6 +43,7 @@ export default {
     reviews: 'Mais avaliações',
     searchPlaceholder: 'Buscar ideias por título ou descrição...',
     sortBy: 'Ordenar por:',
+    tagStatus: '{{tag}}, {{status}}',
   },
   form: {
     description: 'Descrição detalhada (Markdown)',
@@ -63,6 +65,8 @@ export default {
     emptyTitle: 'Nenhuma ideia disponível ainda',
     loadMore: 'Carregar mais ideias',
     loadingMore: 'Carregando mais ideias...',
+    resultsFound_one: '{{count}} ideia encontrada',
+    resultsFound_other: '{{count}} ideias encontradas',
     reviews: '{{count}} avaliações',
   },
   mine: {

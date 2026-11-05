@@ -51,10 +51,22 @@ export function IdeaSearchAndFilters() {
             key={tag}
             variant={selectedTags.includes(tag) ? 'default' : 'outline'}
             className="cursor-pointer"
-            onClick={() => toggleTag(tag)}
-          >
-            {tag}
-          </Badge>
+            render={
+              <button
+                type="button"
+                aria-pressed={selectedTags.includes(tag)}
+                aria-label={t('ideas:tagStatus', {
+                  tag,
+                  status: selectedTags.includes(tag)
+                    ? t('common:selected')
+                    : t('common:notSelected'),
+                })}
+                onClick={() => toggleTag(tag)}
+              >
+                {tag}
+              </button>
+            }
+          ></Badge>
         ))}
       </div>
 
