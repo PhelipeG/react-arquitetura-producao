@@ -51,16 +51,17 @@ export default defineConfig({
     project === 'e2e'
       ? [
           {
-            command:
-              'cp .env.example .env && npm install && npm run build && npm run db:prepare && npm run start',
+            command: 'npm run build && npm run start',
             url: 'http://localhost:9999',
-            cwd: '../api',
+            cwd: './backend',
             reuseExistingServer: !process.env.CI,
+            timeout: 180_000,
           },
           {
-            command: `npm run build && npm run preview`,
+            command: 'npm run dev',
             url: 'http://localhost:5173',
             reuseExistingServer: !process.env.CI,
+            timeout: 120_000,
           },
         ]
       : {

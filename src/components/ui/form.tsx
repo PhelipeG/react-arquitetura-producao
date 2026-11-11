@@ -79,26 +79,33 @@ function FormItem({
   );
 }
 
-function FormLabel(props: React.ComponentProps<'label'>) {
-  return <Label {...props} />;
-}
-
-function FormControl(props: React.HTMLAttributes<HTMLDivElement>) {
-  const { error, formItemId, formDescriptionId, formMessageId } =
-    useFormField();
+function FormLabel({ className, ...props }: React.ComponentProps<'label'>) {
+  const { error, formItemId } = useFormField();
 
   return (
-    <div
-      id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
-      aria-invalid={!!error}
+    <Label
+      htmlFor={formItemId}
+      className={cn(error && 'text-destructive', className)}
       {...props}
     />
   );
+}
+
+function FormControl({
+  children,
+}: {
+  children: React.ReactElement<React.HTMLAttributes<HTMLElement>>;
+}) {
+  const { error, formItemId, formDescriptionId, formMessageId } =
+    useFormField();
+
+  return React.cloneElement(children, {
+    id: formItemId,
+    'aria-describedby': !error
+      ? `${formDescriptionId}`
+      : `${formDescriptionId} ${formMessageId}`,
+    'aria-invalid': !!error,
+  });
 }
 
 function FormDescription({

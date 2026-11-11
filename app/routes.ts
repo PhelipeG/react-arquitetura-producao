@@ -19,6 +19,7 @@ export default [
         index('./routes/dashboard/dashboard.tsx'),
         route('ideas', './routes/dashboard/ideas/ideas.tsx'),
         route('ideas/new', './routes/dashboard/ideas/new.tsx'),
+        route('ideas/:id/edit', './routes/dashboard/ideas/edit.tsx'),
         route('reviews', './routes/dashboard/reviews.tsx'),
       ]),
     ]),

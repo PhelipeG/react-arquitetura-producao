@@ -1,19 +1,28 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { useCreateReviewMutation } from '@/features/reviews/api/create-review';
 import { ReviewFormModal } from '@/features/reviews/components/review-form-modal';
+import { reviewsQueryKeys } from '@/features/reviews/config/query-keys';
 import { useNotificationActions } from '@/stores/notification';
 import type { CreateReviewData } from '@/types/generated/types.gen';
 
 export function CreateReview({ ideaId }: { ideaId: string }) {
+  const queryClient = useQueryClient();
   const { showNotification } = useNotificationActions();
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   const createReviewMutation = useCreateReviewMutation({
     options: {
-      onSuccess: () => {
+      onSuccess: async () => {
         setIsReviewModalOpen(false);
+        await queryClient.invalidateQueries({
+          queryKey: reviewsQueryKeys.byIdea(ideaId),
+        });
+        await queryClient.invalidateQueries({
+          queryKey: reviewsQueryKeys.current(),
+        });
         showNotification({
           type: 'success',
           title: 'Review created',

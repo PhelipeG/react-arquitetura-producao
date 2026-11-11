@@ -32,7 +32,15 @@ export function LoginForm({ onSubmit, error, isPending }: LoginFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form
+        method="post"
+        noValidate
+        onSubmit={(event) => {
+          event.preventDefault();
+          void form.handleSubmit(onSubmit)(event);
+        }}
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="email"

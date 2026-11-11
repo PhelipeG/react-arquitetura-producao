@@ -130,17 +130,23 @@ export function IdeaForm({
                           key={tag}
                           variant={isSelected ? 'default' : 'outline'}
                           className="cursor-pointer"
-                          onClick={() => {
-                            if (isSubmitting) return;
-                            const currentTags = field.value || [];
-                            const newTags = isSelected
-                              ? currentTags.filter((item) => item !== tag)
-                              : [...currentTags, tag];
-                            field.onChange(newTags);
-                          }}
-                        >
-                          {tag}
-                        </Badge>
+                          render={
+                            <button
+                              type="button"
+                              aria-pressed={isSelected}
+                              disabled={isSubmitting}
+                              onClick={() => {
+                                const currentTags = field.value || [];
+                                const newTags = isSelected
+                                  ? currentTags.filter((item) => item !== tag)
+                                  : [...currentTags, tag];
+                                field.onChange(newTags);
+                              }}
+                            >
+                              {tag}
+                            </button>
+                          }
+                        />
                       );
                     })
                   )}

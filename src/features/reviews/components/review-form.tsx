@@ -57,18 +57,34 @@ export function ReviewForm({
             <FormItem>
               <FormLabel>Rating</FormLabel>
               <FormControl>
-                <div className="flex space-x-1 mt-2">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-6 w-6 cursor-pointer ${
-                        i < field.value
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-gray-300'
-                      }`}
-                      onClick={() => field.onChange(i + 1)}
-                    />
-                  ))}
+                <div
+                  className="flex space-x-1 mt-2"
+                  role="radiogroup"
+                  aria-label="Rating"
+                >
+                  {Array.from({ length: 5 }).map((_, i) => {
+                    const ratingValue = i + 1;
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        role="radio"
+                        aria-checked={field.value === ratingValue}
+                        aria-label={`${ratingValue} star${ratingValue === 1 ? '' : 's'}`}
+                        className="p-0 bg-transparent border-0"
+                        onClick={() => field.onChange(ratingValue)}
+                      >
+                        <Star
+                          className={`h-6 w-6 cursor-pointer ${
+                            i < field.value
+                              ? 'fill-yellow-400 text-yellow-400'
+                              : 'text-gray-300'
+                          }`}
+                          aria-hidden="true"
+                        />
+                      </button>
+                    );
+                  })}
                 </div>
               </FormControl>
               <FormMessage />
