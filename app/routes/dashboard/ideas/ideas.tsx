@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
 
+import { RouteLink as Link } from '@/components/route-link';
 import { Seo } from '@/components/seo';
 import { buttonVariants } from '@/components/ui/button';
 import { useAuthorization } from '@/features/auth/hooks/use-authorization';

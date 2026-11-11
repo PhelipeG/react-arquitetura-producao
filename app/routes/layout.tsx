@@ -1,13 +1,15 @@
 import { useTranslation } from 'react-i18next';
-import { Outlet, useNavigate } from 'react-router';
+import { Outlet } from 'react-router';
 
 import Navigation from '@/components/navigation';
+import { PageTransition } from '@/components/page-transition';
 import { useLogoutUserMutation } from '@/features/auth/api/logout';
 import { useUser } from '@/features/auth/hooks/use-user';
+import { useTransitionNavigate } from '@/hooks/use-transition-navigate';
 
 export default function Layout() {
   const user = useUser();
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
   const { t } = useTranslation(['navigation']); // aqui importamos o namespace navigation para usar as traduções
 
   const logoutUserMutation = useLogoutUserMutation({
@@ -36,7 +38,9 @@ focus:py-2 focus:border focus:rounded focus:ring-2 focus:ring-ring"
         <Navigation user={user} onLogout={handleLogout} />
       </header>
       <main className="min-h-screen bg-background">
-        <Outlet />
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
       </main>
       <footer className="border-t py-6 px-4 text-center tforeground">
         {' '}

@@ -1,8 +1,8 @@
 import { MessageSquare, User, Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
 
 import { RatingDisplay } from '@/components/rating-display';
+import { RouteLink as Link } from '@/components/route-link';
 import { Badge } from '@/components/ui/badge';
 import { formatDate } from '@/lib/date';
 import type { Idea } from '@/types/generated/types.gen';

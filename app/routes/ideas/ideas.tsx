@@ -61,7 +61,7 @@ function Ideas() {
 
   const allIdeas =
     ideasInfiniteQuery.data?.pages.flatMap((page) => page.data) || [];
-  const ListComponent = isClient ? VirtualizedIdeasList : IdeasList;
+  const ListComponent = isClient ? VirtualizedIdeasList : IdeasList; // aqui estamos usando o VirtualizedIdeasList se o usuário estiver em um dispositivo mobile e o IdeasList se estiver em um dispositivo desktop
 
   return (
     <div className="container mx-auto px-4 py-8">

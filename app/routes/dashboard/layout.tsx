@@ -1,7 +1,8 @@
 import { LayoutDashboard, Lightbulb, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, Outlet } from 'react-router';
+import { Outlet } from 'react-router';
 
+import { RouteNavLink as NavLink } from '@/components/route-link';
 import { cn } from '@/lib/utils';
 
 import { protectedMiddleware } from '~/middleware/protected';

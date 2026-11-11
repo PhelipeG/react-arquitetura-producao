@@ -1,6 +1,6 @@
 import { Star, User, Calendar } from 'lucide-react';
-import { Link } from 'react-router';
 
+import { RouteLink as Link } from '@/components/route-link';
 import { useUser } from '@/features/auth/hooks/use-user';
 import { formatDate } from '@/lib/date';
 import type { Review } from '@/types/generated/types.gen';

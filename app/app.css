@@ -73,3 +73,74 @@
     font-family: var(--font-heading);
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/* Page transitions                                                           */
+/* -------------------------------------------------------------------------- */
+
+.ds-page-transition {
+  view-transition-name: page-content;
+}
+
+/* Native cross-fade between the old and the new page (View Transitions API) */
+::view-transition-old(page-content) {
+  animation: ds-page-leave var(--ds-duration) var(--ds-ease-out) both;
+}
+
+::view-transition-new(page-content) {
+  animation: ds-page-enter var(--ds-duration) var(--ds-ease-out) both;
+}
+
+/* The shell (header/footer) stays put — only the page content animates */
+::view-transition-old(root) {
+  animation: none;
+  opacity: 0;
+}
+
+::view-transition-new(root) {
+  animation: none;
+  opacity: 1;
+}
+
+/* Avoid morphing the content box when pages have different sizes */
+::view-transition-group(page-content) {
+  animation: none;
+}
+
+@keyframes ds-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ds-page-leave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Fallback for browsers without the View Transitions API */
+.ds-page-transition-animate {
+  animation: ds-page-enter var(--ds-duration) var(--ds-ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(page-content),
+  ::view-transition-new(page-content) {
+    animation: none;
+  }
+
+  .ds-page-transition-animate {
+    animation: none;
+  }
+}

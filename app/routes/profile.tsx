@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { data as routerData, Link } from 'react-router';
+import { data as routerData } from 'react-router';
 
 import { ErrorMessage } from '@/components/error-message';
+import { RouteLink as Link } from '@/components/route-link';
 import { Seo } from '@/components/seo';
 import { buttonVariants } from '@/components/ui/button';
 import { UserIdeas } from '@/features/ideas/components/user-ideas';

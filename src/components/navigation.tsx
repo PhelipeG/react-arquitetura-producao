@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router';
 
 import { LanguageSwitcher } from '@/components/language-switcher';
+import { RouteNavLink as NavLink } from '@/components/route-link';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { CurrentUser } from '@/types/generated/types.gen';

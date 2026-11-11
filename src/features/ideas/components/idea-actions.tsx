@@ -1,7 +1,6 @@
 import { MoreHorizontal, Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -10,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useTransitionNavigate } from '@/hooks/use-transition-navigate';
 import type { Idea } from '@/types/generated/types.gen';
 
 import { DeleteIdea } from './delete-idea';
@@ -19,7 +19,7 @@ export type IdeaActionsProps = {
 };
 
 export function IdeaActions({ idea }: IdeaActionsProps) {
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
   const { t } = useTranslation(['ideas']);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 

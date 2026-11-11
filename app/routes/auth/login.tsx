@@ -1,13 +1,15 @@
-import { Link, useNavigate, useRevalidator } from 'react-router';
+import { useRevalidator } from 'react-router';
 
+import { RouteLink as Link } from '@/components/route-link';
 import { Seo } from '@/components/seo';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useLoginUserMutation } from '@/features/auth/api/login';
 import { LoginForm } from '@/features/auth/components/login-form';
+import { useTransitionNavigate } from '@/hooks/use-transition-navigate';
 import type { LoginUserData } from '@/types/generated/types.gen';
 
 export default function LoginPage() {
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
   const revalidator = useRevalidator();
 
   const loginUserMutation = useLoginUserMutation();

@@ -1,13 +1,15 @@
-import { Link, useNavigate, useRevalidator } from 'react-router';
+import { useRevalidator } from 'react-router';
 
+import { RouteLink as Link } from '@/components/route-link';
 import { Seo } from '@/components/seo';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRegisterUserMutation } from '@/features/auth/api/register';
 import { RegisterForm } from '@/features/auth/components/register-form';
+import { useTransitionNavigate } from '@/hooks/use-transition-navigate';
 import type { RegisterUserData } from '@/types/generated/types.gen';
 
 export default function RegisterPage() {
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
   const revalidator = useRevalidator();
 
   const registerUserMutation = useRegisterUserMutation();

@@ -1,8 +1,8 @@
 import { User as UserIcon } from 'lucide-react';
-import { Link } from 'react-router';
 
 import { MarkdownRenderer } from '@/components/markdown-renderer';
 import { RatingDisplay } from '@/components/rating-display';
+import { RouteLink as Link } from '@/components/route-link';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuthorization } from '@/features/auth/hooks/use-authorization';

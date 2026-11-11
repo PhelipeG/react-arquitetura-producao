@@ -1,7 +1,7 @@
 import { MessageSquare, User } from 'lucide-react';
-import { Link } from 'react-router';
 
 import { RatingDisplay } from '@/components/rating-display';
+import { RouteLink as Link } from '@/components/route-link';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { formatDate } from '@/lib/date';

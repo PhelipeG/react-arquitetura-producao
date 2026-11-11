@@ -1,15 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 
 import { ErrorMessage } from '@/components/error-message';
 import { useCreateIdeaMutation } from '@/features/ideas/api/create-idea';
 import { IdeaForm } from '@/features/ideas/components/idea-form';
 import { ideasQueryKeys } from '@/features/ideas/config/query-keys';
+import { useTransitionNavigate } from '@/hooks/use-transition-navigate';
 
 export default function NewIdeaPage() {
   const { t } = useTranslation('ideas');
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
   const queryClient = useQueryClient();
   const createIdeaMutation = useCreateIdeaMutation({
     options: {

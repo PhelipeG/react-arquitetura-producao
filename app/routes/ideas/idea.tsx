@@ -1,8 +1,9 @@
 import { Lightbulb } from 'lucide-react';
 import { Suspense, use } from 'react';
-import { data as routerData, Link } from 'react-router';
+import { data as routerData } from 'react-router';
 
 import { ErrorMessage } from '@/components/error-message';
+import { RouteLink as Link } from '@/components/route-link';
 import { Seo } from '@/components/seo';
 import { buttonVariants } from '@/components/ui/button';
 import { useAuthorization } from '@/features/auth/hooks/use-authorization';

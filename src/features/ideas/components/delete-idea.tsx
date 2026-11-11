@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 
 import { ErrorMessage } from '@/components/error-message';
 import {
@@ -13,6 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { useTransitionNavigate } from '@/hooks/use-transition-navigate';
 import { useNotificationActions } from '@/stores/notification';
 import type { Idea } from '@/types/generated/types.gen';
 
@@ -35,7 +35,7 @@ export function DeleteIdea({
   const { t } = useTranslation(['ideas', 'common']);
   const queryClient = useQueryClient();
   const { showNotification } = useNotificationActions();
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
 
   const deleteIdeaMutation = useDeleteIdeaMutation({
     options: {

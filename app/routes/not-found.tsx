@@ -1,6 +1,6 @@
 import { Home, Lightbulb, Search, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router';
 
+import { RouteLink as Link } from '@/components/route-link';
 import { Seo } from '@/components/seo';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
