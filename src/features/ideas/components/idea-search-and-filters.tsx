@@ -55,7 +55,7 @@ export function IdeaSearchAndFilters() {
               <button
                 type="button"
                 aria-pressed={selectedTags.includes(tag)}
-                aria-label={t('ideas:tagStatus', {
+                aria-label={t('ideas:filters.tagStatus', {
                   tag,
                   status: selectedTags.includes(tag)
                     ? t('common:selected')
@@ -76,7 +76,10 @@ export function IdeaSearchAndFilters() {
             {t('ideas:filters.sortBy')}
           </span>
           <Select value={sortBy} onValueChange={(value) => setSortBy(value)}>
-            <SelectTrigger className="w-45">
+            <SelectTrigger
+              className="w-45"
+              aria-label={t('ideas:filters.sortBy')}
+            >
               <SelectValue placeholder={t('ideas:filters.newest')} />
             </SelectTrigger>
             <SelectContent>

@@ -16,10 +16,10 @@
     "jsx": "react-jsx",
     "rootDirs": [".", "./.react-router/types"],
     "ignoreDeprecations": "5.0",
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "~/*": ["./app/*"]
+      "~/*": ["./app/*"],
+      "testing/*": ["./testing/*"]
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,

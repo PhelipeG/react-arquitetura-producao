@@ -2,6 +2,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import mockyBalboa from '@mocky-balboa/react-router';
 import { reactRouter } from '@react-router/dev/vite';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import tailwindcss from '@tailwindcss/vite';
@@ -13,11 +14,16 @@ const dirname =
     : path.dirname(fileURLToPath(import.meta.url));
 
 const isStorybook = process.env.STORYBOOK === 'true';
+const enableMocks = process.env.ENABLE_MOCKS === 'true';
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
-  plugins: [tailwindcss(), !isStorybook && reactRouter()],
+  plugins: [
+    tailwindcss(),
+    !isStorybook && reactRouter(),
+    mockyBalboa({ enabled: enableMocks }),
+  ],
   resolve: {
     tsconfigPaths: true,
     alias: {

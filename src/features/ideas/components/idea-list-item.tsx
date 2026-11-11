@@ -15,7 +15,7 @@ export function IdeaListItem({ idea }: IdeaListItemProps) {
   const { t, i18n } = useTranslation('ideas');
 
   return (
-    <div className="ds-list-item py-6 -mx-6 px-6">
+    <div data-testid="idea-list-item" className="ds-list-item py-6 -mx-6 px-6">
       <div className="flex flex-col space-y-3">
         <div className="flex items-start justify-between">
           <div className="flex-1">
